@@ -85,7 +85,7 @@ bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const
 
 void Board::randSet()
 {
-    for (uint64_t counter { 0 }; counter < safetyLimit; ++counter) {
+    for (uint64_t counter { 0 }; counter < Board::safetyLimit; ++counter) {
         uint8_t row = (*distribution)((*generator));
         uint8_t col = (*distribution)((*generator));
         uint8_t val = (*distribution)((*generator)) + 1;
@@ -98,7 +98,7 @@ void Board::randSet()
 
 void Board::randClear()
 {
-    for (uint64_t counter { 0 }; counter < safetyLimit; ++counter) {
+    for (uint64_t counter { 0 }; counter < Board::safetyLimit; ++counter) {
         uint8_t row = (*distribution)((*generator));
         uint8_t col = (*distribution)((*generator));
         if (getCell(row, col) > 0) {
@@ -106,4 +106,19 @@ void Board::randClear()
             return;
         }
     }
+}
+
+bool Board::isSolved() const
+{
+    uint16_t checkSum { 0 };
+    for (const auto& row : board) {
+        for (const auto& col : row) {
+            checkSum += col;
+        }
+    }
+    return (checkSum == Board::checkSum);
+}
+
+void Board::solve()
+{
 }
