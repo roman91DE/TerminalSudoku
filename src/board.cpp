@@ -122,18 +122,17 @@ void Board::printCheckSum() const
 
 bool Board::isSolved() const
 {
-    uint32_t checkSum { 0 };
+    uint32_t sum { 0 };
     for (const auto& row : board) {
         for (const auto& col : row) {
-            checkSum += col;
+            sum += col;
         }
     }
-    return (checkSum == Board::checkSum);
+    return (sum == Board::checkSum);
 }
 
 bool Board::solve()
 {
-    breakRecursion = false;
     recSolve();
     if (isSolved())
         return true;
@@ -153,9 +152,9 @@ void Board::recSolve()
                         clearCell(rowIdx, colIdx);
                     }
                 }
+                return;
             }
         }
-        return;
     }
     printBoard();
     std::cin >> c;

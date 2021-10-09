@@ -17,8 +17,7 @@ class Board {
     static constexpr uint32_t safetyLimit { 1'000'000 };
     // solved grid needs to sum up to checkSum
     static constexpr uint32_t checkSum { 405 };
-    // boolean variable to end recursion
-    bool breakRecursion;
+
 
     // private methods
     static inline void printLine();
