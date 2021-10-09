@@ -7,7 +7,7 @@
 
 class Board {
 
-    // member
+    // private member
     std::array<std::array<uint8_t, 9>, 9> board;
     // random number factory
     std::default_random_engine* generator;
@@ -15,7 +15,7 @@ class Board {
     // safety feature, should never be reached
     const uint32_t safetyLimit { 1'000'000 };
 
-    // methods
+    // private methods
     static inline void printLine();
     bool isPossible(uint8_t val, uint8_t row, uint8_t col) const;
     void randSet();

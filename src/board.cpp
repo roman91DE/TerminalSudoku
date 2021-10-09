@@ -65,7 +65,12 @@ void Board::clearCell(uint8_t row, uint8_t col) { this->setCell(0, row, col); }
 
 bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const
 {
-    return 1;
+    // check row and column
+    for (u_int8_t idx { 0 }; idx < 8; ++idx) {
+        if ((getCell(row, idx) == val) || (getCell(idx, col) == val))
+            return false;
+    }
+    // check square
 }
 
 void Board::randSet()
