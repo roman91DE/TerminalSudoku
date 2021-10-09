@@ -75,9 +75,9 @@ bool Board::isPossible(uint16_t val, uint16_t row, uint16_t col) const
     // check square
     uint16_t rowStart = (row / 3) * 3;
     uint16_t colStart = (col / 3) * 3;
-    for (uint16_t rowIdx { rowStart }; rowIdx < (rowStart + 3); ++rowIdx) {
-        for (uint16_t colIdx { 0 }; colIdx < (colStart + 3); ++colIdx) {
-            if (getCell(rowIdx, colIdx) == val)
+    for (uint16_t rowOffset { 0 }; rowOffset < 4; ++rowOffset) {
+        for (uint16_t colOffset { 0 }; colOffset < 4; ++colOffset) {
+            if (getCell((rowStart + rowOffset), (colStart + colOffset)) == val)
                 return false;
         }
     }
@@ -122,29 +122,26 @@ bool Board::isSolved() const
 
 bool Board::solve()
 {
-    recSolve(*this);
+    recSolve();
     if (isSolved())
         return true;
     return false;
 }
 
-void Board::recSolve(Board& board)
+void Board::recSolve()
 {
-    char c;
-    board.printBoard();
     for (uint16_t rowIdx { 0 }; rowIdx < 9; ++rowIdx) {
         for (uint16_t colIdx { 0 }; colIdx < 9; ++colIdx) {
-            if (board.getCell(rowIdx, colIdx) == 0) {
+            if (getCell(rowIdx, colIdx) == 0) {
                 for (uint16_t pval { 1 }; pval < 10; ++pval) {
-                    if (board.isPossible(pval, rowIdx, colIdx)) {
-                        board.setCell(pval, rowIdx, colIdx);
-                        recSolve(board);
-                        board.clearCell(rowIdx, colIdx);
+                    if (isPossible(pval, rowIdx, colIdx)) {
+                        setCell(pval, rowIdx, colIdx);
+                        recSolve();
+                        clearCell(rowIdx, colIdx);
                     }
                 }
                 return;
             }
         }
     }
-    std::cin >> c;
 }

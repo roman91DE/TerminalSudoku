@@ -24,7 +24,7 @@ class Board {
     void randSet();
     void randClear();
     bool isSolved() const;
-    static void recSolve(Board& board);
+    void recSolve();
 
 public:
     Board();
