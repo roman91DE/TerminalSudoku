@@ -11,7 +11,8 @@ struct SudokuMove {
 };
 
 // is used to determine the number of prefilled cells
-enum class SudokuDifficulty { easy = 0,
+enum class SudokuDifficulty {
+    easy = 0,
     medium = 1,
     hard = 2
 };
