@@ -1,10 +1,7 @@
 
 #include "board.h"
-
-#include <fmt/core.h>
-
 #include <algorithm>
-
+#include <fmt/core.h>
 #include <random>
 
 Board::Board()
