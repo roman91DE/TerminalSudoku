@@ -9,7 +9,10 @@ include_directories(
 
 add_executable(
   CL_Sudoku
-  src/main.cpp)
+  src/main.cpp
+  src/board.cpp
+  
+  )
 
 find_package(fmt)
 

@@ -8,8 +8,8 @@ private:
 public:
     Board();
     ~Board();
-    int getCell(uint8_t row, uint8_t col) const;
-    void setCell(uint8_t val, uint8_t row, uint8_t col);
-    void clearCell(uint8_t row, uint8_t col);
+    //int getCell(uint8_t row, uint8_t col) const;
+    //void setCell(uint8_t val, uint8_t row, uint8_t col);
+    //void clearCell(uint8_t row, uint8_t col);
     void printBoard() const;
 };
