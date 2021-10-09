@@ -3,7 +3,11 @@
 
 #include <fmt/core.h>
 
+#include <iostream>
+
 #include <algorithm>
+
+#include <exception>
 
 Board::Board()
     : generator(new std::default_random_engine),
@@ -15,6 +19,11 @@ Board::Board()
 Board::~Board() {
   delete generator;
   delete distribution;
+}
+
+void Board::resetBoard() {
+  for (auto& row : board)
+    std::fill(row.begin(), row.end(), 0);
 }
 
 void Board::printLine() {
@@ -151,4 +160,21 @@ void Board::recursiveSolve() {
     }
   }
   throw Board::stopRecursion();
+}
+
+void Board::randomInit(uint16_t numCells) {
+  // fill board with some random values
+  for (uint16_t counter{0}; counter < Board::initSeed; ++counter)
+    randSet();
+  solve();
+  //
+  if (!isSolved()) {
+    std::cerr << "Backtracking failed at solving the current Board!\nRepeating "
+                 "randomization...\n";
+    resetBoard();
+    randomInit(numCells);
+  }
+  // delete random cells until numCells are left
+  for (uint16_t counter{9 * 9}; counter > numCells; --counter)
+    randClear();
 }
