@@ -8,7 +8,8 @@
 Board::Board()
     : generator(new std::default_random_engine),
       distribution(new std::uniform_int_distribution<uint16_t>(0, 8)) {
-  for (auto& row : board) std::fill(row.begin(), row.end(), 0);
+  for (auto& row : board)
+    std::fill(row.begin(), row.end(), 0);
 }
 
 Board::~Board() {
@@ -16,7 +17,9 @@ Board::~Board() {
   delete distribution;
 }
 
-void Board::printLine() { fmt::print(" +-----------+\n"); }
+void Board::printLine() {
+  fmt::print(" +-----------+\n");
+}
 
 void Board::printBoard() const {
   uint16_t rowCount{0}, colCount{0}, lineCount{0};
@@ -60,11 +63,13 @@ void Board::clearCell(uint16_t row, uint16_t col) {
 
 bool Board::isPossible(uint16_t val, uint16_t row, uint16_t col) const {
   // validate args
-  if ((val > 9) || ((col > 8) || (row > 8))) return false;
+  if ((val > 9) || ((col > 8) || (row > 8)))
+    return false;
 
   // check row and column
   for (uint16_t idx{0}; idx < 9; ++idx) {
-    if ((getCell(row, idx) == val) || (getCell(idx, col) == val)) return false;
+    if ((getCell(row, idx) == val) || (getCell(idx, col) == val))
+      return false;
   }
   // check square
   uint16_t rowStart = (row / 3) * 3;
