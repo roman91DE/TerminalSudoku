@@ -70,7 +70,7 @@ bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const
 
 void Board::randSet()
 {
-    for (uint64_t counter { 0 }; counter < 1000000; ++counter) {
+    for (uint64_t counter { 0 }; counter < safetyLimit; ++counter) {
         uint8_t row = (*distribution)((*generator));
         uint8_t col = (*distribution)((*generator));
         uint8_t val = (*distribution)((*generator)) + 1;
@@ -81,4 +81,14 @@ void Board::randSet()
     }
 }
 
-void Board::randClear() { }
+void Board::randClear()
+{
+    for (uint64_t counter { 0 }; counter < safetyLimit; ++counter) {
+        uint8_t row = (*distribution)((*generator));
+        uint8_t col = (*distribution)((*generator));
+        if (getCell(row, col) == 0) {
+            clearCell(row, col);
+            return;
+        }
+    }
+}
