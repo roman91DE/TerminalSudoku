@@ -1,0 +1,16 @@
+// debug setting for macbook pro (m1)
+// debugs the executable created by cmake extension
+// important - build cmake project before and use debug mode
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug",
+      "program": "${workspaceFolder}/build/CL_Sudoku",
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
