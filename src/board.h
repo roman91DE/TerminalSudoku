@@ -18,7 +18,6 @@ class Board {
     // solved grid needs to sum up to checkSum
     static constexpr uint32_t checkSum { 405 };
 
-
     // private methods
     static inline void printLine();
     bool isPossible(uint16_t val, uint16_t row, uint16_t col) const;

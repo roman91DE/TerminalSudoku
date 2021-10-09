@@ -149,7 +149,7 @@ void Board::recSolve()
                     if (isPossible(pval, rowIdx, colIdx)) {
                         setCell(pval, rowIdx, colIdx);
                         recSolve();
-                        clearCell(rowIdx, colIdx);
+                        clearCell(rowIdx, colIdx);                        
                     }
                 }
                 return;
