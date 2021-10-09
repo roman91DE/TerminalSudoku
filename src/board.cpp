@@ -142,18 +142,24 @@ bool Board::solve()
 
 void Board::recSolve()
 {
-    for (uint16_t rowIdx { 0 }; rowIdx < 9; ++rowIdx) {
-        for (uint16_t colIdx { 0 }; colIdx < 9; ++colIdx) {
-            if (getCell(rowIdx, colIdx) == 0) {
-                for (uint16_t pval { 1 }; pval < 10; ++pval) {
-                    if (isPossible(pval, rowIdx, colIdx)) {
-                        setCell(pval, rowIdx, colIdx);
-                        recSolve();
-                        clearCell(rowIdx, colIdx);
+    if (isSolved)
+        breakRecursion = true;
+    if (!breakRecursion)
+
+    {
+        for (uint16_t rowIdx { 0 }; rowIdx < 9; ++rowIdx) {
+            for (uint16_t colIdx { 0 }; colIdx < 9; ++colIdx) {
+                if (getCell(rowIdx, colIdx) == 0) {
+                    for (uint16_t pval { 1 }; pval < 10; ++pval) {
+                        if (isPossible(pval, rowIdx, colIdx)) {
+                            setCell(pval, rowIdx, colIdx);
+                            recSolve();
+                            clearCell(rowIdx, colIdx);
+                        }
                     }
                 }
+                return;
             }
-            return;
         }
     }
 }
