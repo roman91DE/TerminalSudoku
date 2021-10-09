@@ -163,4 +163,3 @@ void Board::recSolve()
         return;
     }
 }
-}
