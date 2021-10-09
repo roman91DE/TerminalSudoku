@@ -13,12 +13,19 @@ Board::~Board() {}
 
 void Board::printLine() { fmt::print("+-----------------+\n"); }
 
+bool Board::isZero(uint8_t cell) const {
+  if (cell == 0)
+    return true;
+  else
+    return false;
+}
+
 void Board::printBoard() const {
   uint8_t rowCount = 0;
   Board::printLine();
 
-  for (auto& row : board) {
-    if (rowCount++ == 3) {
+  for (const auto& row : board) {
+    if ((rowCount++) == 3) {
       Board::printLine();
       rowCount = 1;
     }

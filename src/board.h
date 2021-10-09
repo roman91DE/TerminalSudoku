@@ -8,6 +8,7 @@ struct Board {
  private:
   std::array<std::array<uint8_t, 9>, 9> board;
   static inline void printLine();
+  bool isZero(uint8_t cell) const;
 
  public:
   Board();
