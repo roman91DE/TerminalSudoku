@@ -4,9 +4,14 @@
 #include <fmt/core.h>
 
 #include <algorithm>
+#include <random>
 
-Board::Board() {
+Board::Board()
+    : generator(new std::default_random_engine),
+      distribution(new std::uniform_int_distribution<uint8_t>(0, 8)) {
   for (auto& row : board) std::fill(row.begin(), row.end(), 0);
+  std::default_random_engine generator;
+  std::uniform_int_distribution<int> distribution(1, 6);
 }
 
 Board::~Board() {}
@@ -50,3 +55,7 @@ int Board::getCell(uint8_t row, uint8_t col) const {
 }
 
 void Board::clearCell(uint8_t row, uint8_t col) { this->setCell(0, row, col); }
+
+void Board::randClear() {}
+
+void Board::randSet() {}
