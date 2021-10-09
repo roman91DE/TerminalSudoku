@@ -1,9 +1,10 @@
 #include "board.h"
 #include <fmt/core.h>
 
-int main(int, char**)
+int
+main(int, char**)
 {
-    Board b;
-    b.printBoard();
-    return 0;
+  Board b;
+  b.printBoard();
+  return 0;
 }
