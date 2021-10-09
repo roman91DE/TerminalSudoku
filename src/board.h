@@ -1,13 +1,12 @@
 #include <array>
 #include <cstdint>
 
-struct Board
-{
-private:
+struct Board {
+ private:
   std::array<std::array<uint8_t, 9>, 9> board;
   static inline void printLine();
 
-public:
+ public:
   Board();
   ~Board();
   // int getCell(uint8_t row, uint8_t col) const;
