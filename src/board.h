@@ -7,7 +7,9 @@
 
 class Board {
 
-    // private member
+private:
+    // member
+    // ------
     std::array<std::array<uint16_t, 9>, 9> board;
     // random number factory
     std::default_random_engine* generator;
@@ -19,13 +21,9 @@ class Board {
     // is thrown to exit recursive backtracking
     class stopRecursion {
     };
-
-    // private methods
+    //  methods
+    // ------
     static inline void printLine();
-    bool isPossible(uint16_t val, uint16_t row, uint16_t col) const;
-    void randSet();
-    void randClear();
-    bool isSolved() const;
     // implements recursive backtracking algorithm (internal method, should not be called directly)
     void recursiveSolve();
     void printCheckSum() const;
@@ -36,6 +34,10 @@ public:
     uint16_t getCell(uint16_t row, uint16_t col) const;
     void setCell(uint16_t val, uint16_t row, uint16_t col);
     void clearCell(uint16_t row, uint16_t col);
+    bool isPossible(uint16_t val, uint16_t row, uint16_t col) const;
+    void randSet();
+    void randClear();
+    bool isSolved() const;
     void printBoard() const;
     // starts & stops recursive backtracking algorithm
     bool solve();
