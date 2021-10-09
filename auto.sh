@@ -3,7 +3,7 @@
 # automate src formatting and git 
 
 git pull
-clang-format -style='google' -i src/*.*
+clang-format -style='facebook' -i src/*.*
 git add *
 git commit -m "auto commit"
 git push
