@@ -66,7 +66,7 @@ void Board::clearCell(uint8_t row, uint8_t col) { this->setCell(0, row, col); }
 bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const
 {
     // check args
-    if ((val > 9) | ((col > 8) | (row > 8)))
+    if ((val > 9) || ((col > 8) || (row > 8)))
         return false;
 
     // check row and column
