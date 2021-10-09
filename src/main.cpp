@@ -3,7 +3,7 @@
 
 int main(int, char**)
 {
-    fmt::print("Main()\n");
-    int n = 12;
+    Board b;
+    b.printBoard();
     return 0;
 }

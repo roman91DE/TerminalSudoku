@@ -3,7 +3,8 @@
 
 struct Board {
 private:
-    std::array<std::array<uint8_t, 10>, 10> board;
+    std::array<std::array<uint8_t, 9>, 9> board;
+    static void printLine();
 
 public:
     Board();
