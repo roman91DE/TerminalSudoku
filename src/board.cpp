@@ -13,7 +13,10 @@ Board::Board()
   std::uniform_int_distribution<int> distribution(1, 6);
 }
 
-Board::~Board() {}
+Board::~Board() {
+  delete generator;
+  delete distribution;
+}
 
 void Board::printLine() { fmt::print(" +-----------+\n"); }
 
@@ -55,6 +58,19 @@ int Board::getCell(uint8_t row, uint8_t col) const {
 
 void Board::clearCell(uint8_t row, uint8_t col) { this->setCell(0, row, col); }
 
-void Board::randClear() {}
+bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const {
+  return 1;
+}
+
+void Board::randClear() {
+  while (true) {
+    uint8_t row = (*distribution)((*generator));
+    uint8_t col = (*distribution)((*generator));
+    uint8_t val = (*distribution)((*generator)) + 1;
+    if (isPossible(val, row, col)) {
+      setCell(val, row, col)
+    }
+  }
+}
 
 void Board::randSet() {}
