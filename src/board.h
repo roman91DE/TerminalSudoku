@@ -4,7 +4,7 @@
 struct Board {
 private:
     std::array<std::array<uint8_t, 9>, 9> board;
-    static void printLine();
+    static inline void printLine();
 
 public:
     Board();
