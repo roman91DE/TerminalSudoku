@@ -5,19 +5,21 @@
 
 #include "board.h"
 
-enum class Difficulty { easy = 0, medium = 1, hard = 2 };
+enum class Difficulty { easy = 0,
+    medium = 1,
+    hard = 2 };
 
 class Sudoku {
 private:
-  Board *board_ptr;
+    Board* board_ptr;
 
 public:
-  // construct an empty Sudoku instance
-  Sudoku();
-  // construct a partially filled Sudoku
-  Sudoku(Difficulty value);
-  // free resources
-  ~Sudoku();
+    // construct an empty Sudoku instance
+    Sudoku();
+    // construct a partially filled Sudoku
+    Sudoku(Difficulty value);
+    // free resources
+    ~Sudoku();
 };
 
 #endif
