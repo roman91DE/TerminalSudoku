@@ -1,3 +1,6 @@
+#ifndef __BOARDHEADER__
+#define __BOARDHEADER__
+
 #include <array>
 #include <cstdint>
 
@@ -14,3 +17,5 @@ struct Board {
   // void clearCell(uint8_t row, uint8_t col);
   void printBoard() const;
 };
+
+#endif
