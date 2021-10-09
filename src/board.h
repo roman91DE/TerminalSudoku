@@ -1,0 +1,3 @@
+#include <array>
+
+class Board {};
