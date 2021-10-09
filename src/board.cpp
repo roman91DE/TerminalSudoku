@@ -71,6 +71,15 @@ bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const
             return false;
     }
     // check square
+    uint8_t rowStart = (row / 3) * 3;
+    uint8_t colStart = (col / 3) * 3;
+    for (u_int8_t rowIdx { rowStart }; rowIdx < (rowStart + 3); ++rowIdx) {
+        for (u_int8_t colIdx { 0 }; colIdx < (colStart + 3); ++colIdx) {
+            if (getCell(rowIdx, colIdx) == val)
+                return false;
+        }
+    }
+    return true;
 }
 
 void Board::randSet()
