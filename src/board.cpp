@@ -37,3 +37,13 @@ void Board::printBoard() const {
   }
   Board::printLine();
 }
+
+void Board::setCell(uint8_t val, uint8_t row, uint8_t col) {
+  this->board[row][col] = val;
+}
+
+int Board::getCell(uint8_t row, uint8_t col) const {
+  return this->board[row][col];
+}
+
+void Board::clearCell(uint8_t row, uint8_t col) { this->board[row][col] = 0; }
