@@ -33,7 +33,7 @@ public:
     void setCell(uint16_t val, uint16_t row, uint16_t col);
     void clearCell(uint16_t row, uint16_t col);
     void printBoard() const;
-    // run recursive backtracking algorithm
+    // triggers recursive backtracking algorithm
     bool solve();
 };
 
