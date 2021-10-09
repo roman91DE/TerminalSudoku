@@ -32,7 +32,8 @@ public:
     void setCell(uint8_t val, uint8_t row, uint8_t col);
     void clearCell(uint8_t row, uint8_t col);
     void printBoard() const;
-    void solve();
+    // run recursive backtracking algorithm
+    bool solve();
 };
 
 #endif

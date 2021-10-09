@@ -119,6 +119,22 @@ bool Board::isSolved() const
     return (checkSum == Board::checkSum);
 }
 
-void Board::solve()
+bool Board::solve()
 {
+    if (isSolved())
+        return true;
+
+    for (u_int8_t rowIdx { 0 }; rowIdx < 8; ++rowIdx) {
+        for (uint8_t colIdx { 0 }; colIdx < 8; ++colIdx) {
+            if (getCell(rowIdx, colIdx) == 0) {
+                for (uint8_t pval { 1 }; pval < 9; ++pval) {
+                    if (isPossible(pval, rowIdx, colIdx)) {
+                        setCell(pval, rowIdx, colIdx);
+                        solve();
+                        clearCell(rowIdx, colIdx);
+                    }
+                }
+            }
+        }
+    }
 }
