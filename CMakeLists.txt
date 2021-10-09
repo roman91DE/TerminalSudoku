@@ -3,8 +3,13 @@ project(CL_Sudoku VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
+include_directories(
+  src
+)
 
-add_executable(CL_Sudoku main.cpp)
+add_executable(
+  CL_Sudoku
+  src/main.cpp)
 
 find_package(fmt)
 
