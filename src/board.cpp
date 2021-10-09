@@ -130,11 +130,13 @@ bool Board::solve()
                 for (uint8_t pval { 1 }; pval < 9; ++pval) {
                     if (isPossible(pval, rowIdx, colIdx)) {
                         setCell(pval, rowIdx, colIdx);
-                        solve();
+                        if (solve())
+                            return true;
                         clearCell(rowIdx, colIdx);
                     }
                 }
             }
         }
     }
+    return false;
 }
