@@ -75,8 +75,8 @@ bool Board::isPossible(uint16_t val, uint16_t row, uint16_t col) const
     // check square
     uint16_t rowStart = (row / 3) * 3;
     uint16_t colStart = (col / 3) * 3;
-    for (uint16_t rowOffset { 0 }; rowOffset < 4; ++rowOffset) {
-        for (uint16_t colOffset { 0 }; colOffset < 4; ++colOffset) {
+    for (uint16_t rowOffset { 0 }; rowOffset < 3; ++rowOffset) {
+        for (uint16_t colOffset { 0 }; colOffset < 3; ++colOffset) {
             if (getCell((rowStart + rowOffset), (colStart + colOffset)) == val)
                 return false;
         }
@@ -109,9 +109,20 @@ void Board::randClear()
     }
 }
 
+void Board::printCheckSum() const
+{
+    uint32_t checkSum { 0 };
+    for (const auto& row : board) {
+        for (const auto& col : row) {
+            checkSum += col;
+        }
+    }
+    fmt::print("Checksum = {}\n", checkSum);
+}
+
 bool Board::isSolved() const
 {
-    uint16_t checkSum { 0 };
+    uint32_t checkSum { 0 };
     for (const auto& row : board) {
         for (const auto& col : row) {
             checkSum += col;
@@ -122,6 +133,7 @@ bool Board::isSolved() const
 
 bool Board::solve()
 {
+    breakRecursion = false;
     recSolve();
     if (isSolved())
         return true;
@@ -136,6 +148,10 @@ void Board::recSolve()
                 for (uint16_t pval { 1 }; pval < 10; ++pval) {
                     if (isPossible(pval, rowIdx, colIdx)) {
                         setCell(pval, rowIdx, colIdx);
+                        if (isSolved()) {
+                            breakRecursion = true;
+                            return;
+                        }
                         recSolve();
                         clearCell(rowIdx, colIdx);
                     }
