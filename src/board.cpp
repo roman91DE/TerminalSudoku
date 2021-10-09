@@ -11,17 +11,10 @@ Board::Board() {
 
 Board::~Board() {}
 
-void Board::printLine() { fmt::print("+-----------------+\n"); }
-
-bool Board::isZero(uint8_t cell) const {
-  if (cell == 0)
-    return true;
-  else
-    return false;
-}
+void Board::printLine() { fmt::print("+-----------+\n"); }
 
 void Board::printBoard() const {
-  uint8_t rowCount = 0;
+  uint8_t rowCount{0}, colCount{0};
   Board::printLine();
 
   for (const auto& row : board) {
@@ -29,8 +22,18 @@ void Board::printBoard() const {
       Board::printLine();
       rowCount = 1;
     }
-    fmt::print("|{} {} {}|{} {} {}|{} {} {}|\n", row[0], row[1], row[2], row[3],
-               row[4], row[5], row[6], row[7], row[8]);
+    colCount = 0;
+    for (const auto& cell : row) {
+      if ((colCount--) == 0) {
+        fmt::print("|");
+        colCount = 2;
+      }
+      if (cell == 0)
+        fmt::print(" ");
+      else
+        fmt::print("{}", cell);
+    }
+    fmt::print("|\n");
   }
   Board::printLine();
 }
