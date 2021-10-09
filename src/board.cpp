@@ -2,7 +2,6 @@
 #include "board.h"
 #include <algorithm>
 #include <fmt/core.h>
-#include <random>
 
 Board::Board()
     : generator(new std::default_random_engine)
@@ -10,8 +9,6 @@ Board::Board()
 {
     for (auto& row : board)
         std::fill(row.begin(), row.end(), 0);
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution(1, 6);
 }
 
 Board::~Board()
@@ -56,7 +53,7 @@ void Board::setCell(uint8_t val, uint8_t row, uint8_t col)
     this->board[row][col] = val;
 }
 
-int Board::getCell(uint8_t row, uint8_t col) const
+uint8_t Board::getCell(uint8_t row, uint8_t col) const
 {
     return (this->board[row][col]);
 }
@@ -65,7 +62,7 @@ void Board::clearCell(uint8_t row, uint8_t col) { this->setCell(0, row, col); }
 
 bool Board::isPossible(uint8_t val, uint8_t row, uint8_t col) const
 {
-    // check args
+    // validate args
     if ((val > 9) || ((col > 8) || (row > 8)))
         return false;
 
@@ -104,7 +101,7 @@ void Board::randClear()
     for (uint64_t counter { 0 }; counter < safetyLimit; ++counter) {
         uint8_t row = (*distribution)((*generator));
         uint8_t col = (*distribution)((*generator));
-        if (getCell(row, col) == 0) {
+        if (getCell(row, col) > 0) {
             clearCell(row, col);
             return;
         }
