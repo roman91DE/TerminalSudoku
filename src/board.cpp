@@ -3,11 +3,14 @@
 #include <algorithm>
 #include <fmt/core.h>
 
-Board::Board() {
-  for (auto &row : board)
-    std::fill(row.begin(), row.end(), 0);
+Board::Board()
+{
+    for (auto& row : board)
+        std::fill(row.begin(), row.end(), 0);
 }
 
-Board::~Board() {}
+Board::~Board() { }
 
-void Board::printBoard const {}
+void Board::printBoard const
+{
+}
