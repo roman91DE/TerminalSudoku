@@ -3,7 +3,7 @@
 # automate src formatting and git 
 
 git pull
-clang-format -style='google' -i src/*.cpp src/*.h
+clang-format -style='llvm' -i src/*.cpp src/*.h
 git add *
 git commit -m "auto commit"
 git push

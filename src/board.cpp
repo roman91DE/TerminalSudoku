@@ -4,12 +4,14 @@
 #include <fmt/core.h>
 
 #include <algorithm>
+
 #include <random>
 
 Board::Board()
     : generator(new std::default_random_engine),
       distribution(new std::uniform_int_distribution<uint8_t>(0, 8)) {
-  for (auto& row : board) std::fill(row.begin(), row.end(), 0);
+  for (auto &row : board)
+    std::fill(row.begin(), row.end(), 0);
   std::default_random_engine generator;
   std::uniform_int_distribution<int> distribution(1, 6);
 }
@@ -23,14 +25,14 @@ void Board::printBoard() const {
   fmt::print("  123 456 789 \n");
   Board::printLine();
 
-  for (const auto& row : board) {
+  for (const auto &row : board) {
     if ((rowCount++) == 3) {
       Board::printLine();
       rowCount = 1;
     }
     colCount = 0;
     fmt::print("{}", ++lineCount);
-    for (const auto& cell : row) {
+    for (const auto &cell : row) {
       if ((colCount--) == 0) {
         fmt::print("|");
         colCount = 2;

@@ -2,7 +2,7 @@
 
 #include "board.h"
 
-int main(int, char**) {
+int main(int, char **) {
   Board b;
   b.printBoard();
   b.setCell(2, 3, 8);

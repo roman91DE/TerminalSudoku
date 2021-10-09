@@ -6,7 +6,7 @@
 #include <random>
 
 class Board {
- private:
+private:
   std::array<std::array<uint8_t, 9>, 9> board;
   std::default_random_engine *generator;
   std::uniform_int_distribution<uint8_t> *distribution;
@@ -16,7 +16,7 @@ class Board {
   void randSet();
   void randClear();
 
- public:
+public:
   Board();
   ~Board();
   int getCell(uint8_t row, uint8_t col) const;
