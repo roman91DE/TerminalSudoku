@@ -1,18 +1,17 @@
 
 #include "board.h"
+
 #include <fmt/core.h>
+
 #include <algorithm>
 
 Board::Board() {
-  for (auto& row : board)
-    std::fill(row.begin(), row.end(), 0);
+  for (auto& row : board) std::fill(row.begin(), row.end(), 0);
 }
 
 Board::~Board() {}
 
-void Board::printLine() {
-  fmt::print("+-----------------+\n");
-}
+void Board::printLine() { fmt::print("+-----------------+\n"); }
 
 void Board::printBoard() const {
   uint8_t rowCount = 0;

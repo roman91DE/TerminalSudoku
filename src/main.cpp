@@ -1,4 +1,5 @@
 #include <fmt/core.h>
+
 #include "board.h"
 
 int main(int, char**) {
