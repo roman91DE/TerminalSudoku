@@ -131,20 +131,17 @@ bool Board::isSolved() const
     return (sum == Board::checkSum);
 }
 
-
 bool Board::solve()
 {
     try {
-        recSolve();
-    } catch (stopRecursion &sr) {
+        recursiveSolve();
+    } catch (Board::stopRecursion) {
         return true;
     }
     return false;
 }
 
-
-
-void Board::recSolve()
+void Board::recursiveSolve()
 {
     for (uint16_t rowIdx { 0 }; rowIdx < 9; ++rowIdx) {
         for (uint16_t colIdx { 0 }; colIdx < 9; ++colIdx) {
@@ -152,8 +149,8 @@ void Board::recSolve()
                 for (uint16_t pval { 1 }; pval < 10; ++pval) {
                     if (isPossible(pval, rowIdx, colIdx)) {
                         setCell(pval, rowIdx, colIdx);
-                        recSolve();
-                        clearCell(rowIdx, colIdx);                        
+                        recursiveSolve();
+                        clearCell(rowIdx, colIdx);
                     }
                 }
                 return;
@@ -161,5 +158,5 @@ void Board::recSolve()
         }
     }
     if (isSolved())
-        throw stopRecursion();
+        throw Board::stopRecursion();
 }

@@ -5,7 +5,6 @@
 #include <cmath>
 #include <cstdint>
 #include <exception>
-#include <stdexcept>
 #include <random>
 
 class Board {
@@ -19,6 +18,9 @@ class Board {
     static constexpr uint32_t safetyLimit { 1'000'000 };
     // solved grid needs to sum up to checkSum
     static constexpr uint32_t checkSum { 405 };
+    // is thrown to exit recursive backtracking
+    class stopRecursion {
+    };
 
     // private methods
     static inline void printLine();
@@ -26,7 +28,8 @@ class Board {
     void randSet();
     void randClear();
     bool isSolved() const;
-    void recSolve();
+    // implements recursive backtracking algorithm (internal method, must not be called directly)
+    void recursiveSolve();
     void printCheckSum() const;
 
 public:
@@ -36,12 +39,8 @@ public:
     void setCell(uint16_t val, uint16_t row, uint16_t col);
     void clearCell(uint16_t row, uint16_t col);
     void printBoard() const;
-    // triggers recursive backtracking algorithm
+    // triggers recursive backtracking algorithm (calls recursiveSolve())
     bool solve();
 };
-
-// object to throw if recursive backtracking solved board 
-class stopRecursion{};
-
 
 #endif
