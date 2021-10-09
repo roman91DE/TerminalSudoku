@@ -131,17 +131,21 @@ bool Board::isSolved() const
     return (sum == Board::checkSum);
 }
 
+
 bool Board::solve()
 {
-    recSolve();
-    if (isSolved())
+    try {
+        recSolve();
+    } catch (stopRecursion &sr) {
         return true;
+    }
     return false;
 }
 
+
+
 void Board::recSolve()
 {
-    char c;
     for (uint16_t rowIdx { 0 }; rowIdx < 9; ++rowIdx) {
         for (uint16_t colIdx { 0 }; colIdx < 9; ++colIdx) {
             if (getCell(rowIdx, colIdx) == 0) {
@@ -156,6 +160,6 @@ void Board::recSolve()
             }
         }
     }
-    printBoard();
-    std::cin >> c;
+    if (isSolved())
+        throw stopRecursion();
 }

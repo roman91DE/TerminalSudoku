@@ -4,6 +4,8 @@
 #include <array>
 #include <cmath>
 #include <cstdint>
+#include <exception>
+#include <stdexcept>
 #include <random>
 
 class Board {
@@ -37,5 +39,9 @@ public:
     // triggers recursive backtracking algorithm
     bool solve();
 };
+
+// object to throw if recursive backtracking solved board 
+class stopRecursion{};
+
 
 #endif
