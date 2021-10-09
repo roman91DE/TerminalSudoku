@@ -13,6 +13,27 @@ Sudoku::Sudoku()
 {
 }
 
+Sudoku::Sudoku(SudokuDifficulty difficulty)
+{
+
+    uint16_t numCells { 30 };
+
+    switch (difficulty) {
+    case SudokuDifficulty::easy:
+        numCells = 20;
+        break;
+    case SudokuDifficulty::medium:
+        numCells = 30;
+        break;
+    case SudokuDifficulty::hard:
+        numCells = 40;
+        break;
+    default:
+        break;
+    }
+    boardPtr->randomInit(numCells);
+}
+
 Sudoku::~Sudoku()
 {
     delete boardPtr;
