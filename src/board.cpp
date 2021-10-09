@@ -36,6 +36,7 @@ void Board::printBoard() const {
     fmt::print("|\n");
   }
   Board::printLine();
+  fmt::print("\n");
 }
 
 void Board::setCell(uint8_t val, uint8_t row, uint8_t col) {
