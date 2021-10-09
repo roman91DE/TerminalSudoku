@@ -44,7 +44,7 @@ void Board::setCell(uint8_t val, uint8_t row, uint8_t col) {
 }
 
 int Board::getCell(uint8_t row, uint8_t col) const {
-  return this->board[row][col];
+  return (this->board[row][col]);
 }
 
-void Board::clearCell(uint8_t row, uint8_t col) { this->board[row][col] = 0; }
+void Board::clearCell(uint8_t row, uint8_t col) { this->setCell(0, row, col); }
