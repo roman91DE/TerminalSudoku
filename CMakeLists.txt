@@ -11,7 +11,7 @@ add_executable(
   CL_Sudoku
   src/main.cpp
   src/board.cpp
-  
+  src/sudoku.cpp
   )
 
 find_package(fmt)

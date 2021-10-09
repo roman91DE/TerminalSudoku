@@ -2,6 +2,7 @@
 #define __SUDOKUHEADER__
 
 #include "board.h"
+#include <cstdint>
 #include <list>
 
 // represents an individual move by the player
