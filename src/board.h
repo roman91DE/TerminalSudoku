@@ -2,9 +2,7 @@
 #define __BOARDHEADER__
 
 #include <array>
-#include <cmath>
 #include <cstdint>
-#include <exception>
 #include <random>
 
 class Board {
@@ -28,7 +26,7 @@ class Board {
     void randSet();
     void randClear();
     bool isSolved() const;
-    // implements recursive backtracking algorithm (internal method, must not be called directly)
+    // implements recursive backtracking algorithm (internal method, should not be called directly)
     void recursiveSolve();
     void printCheckSum() const;
 
@@ -39,7 +37,7 @@ public:
     void setCell(uint16_t val, uint16_t row, uint16_t col);
     void clearCell(uint16_t row, uint16_t col);
     void printBoard() const;
-    // triggers recursive backtracking algorithm (calls recursiveSolve())
+    // starts & stops recursive backtracking algorithm
     bool solve();
 };
 

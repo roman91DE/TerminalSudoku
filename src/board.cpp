@@ -2,7 +2,6 @@
 #include "board.h"
 #include <algorithm>
 #include <fmt/core.h>
-#include <iostream> //remove later
 
 Board::Board()
     : generator(new std::default_random_engine)
@@ -157,6 +156,5 @@ void Board::recursiveSolve()
             }
         }
     }
-    if (isSolved())
-        throw Board::stopRecursion();
+    throw Board::stopRecursion();
 }
