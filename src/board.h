@@ -9,10 +9,10 @@
 class Board {
 
     // private member
-    std::array<std::array<uint8_t, 9>, 9> board;
+    std::array<std::array<uint16_t, 9>, 9> board;
     // random number factory
     std::default_random_engine* generator;
-    std::uniform_int_distribution<uint8_t>* distribution;
+    std::uniform_int_distribution<uint16_t>* distribution;
     // safety limit to avoid infinite loops (should not be reached)
     static constexpr uint32_t safetyLimit { 1'000'000 };
     // solved grid needs to sum up to checkSum
@@ -20,17 +20,18 @@ class Board {
 
     // private methods
     static inline void printLine();
-    bool isPossible(uint8_t val, uint8_t row, uint8_t col) const;
+    bool isPossible(uint16_t val, uint16_t row, uint16_t col) const;
     void randSet();
     void randClear();
     bool isSolved() const;
+    static void recSolve(Board& board);
 
 public:
     Board();
     ~Board();
-    uint8_t getCell(uint8_t row, uint8_t col) const;
-    void setCell(uint8_t val, uint8_t row, uint8_t col);
-    void clearCell(uint8_t row, uint8_t col);
+    uint16_t getCell(uint16_t row, uint16_t col) const;
+    void setCell(uint16_t val, uint16_t row, uint16_t col);
+    void clearCell(uint16_t row, uint16_t col);
     void printBoard() const;
     // run recursive backtracking algorithm
     bool solve();
