@@ -5,10 +5,8 @@
 #include <cstdint>
 #include <random>
 
-class Board
-{
-
-private:
+class Board {
+ private:
   // member
   // ------
   std::array<std::array<uint16_t, 9>, 9> board;
@@ -16,12 +14,11 @@ private:
   std::default_random_engine* generator;
   std::uniform_int_distribution<uint16_t>* distribution;
   // safety limit to avoid infinite loops (should not be reached)
-  static constexpr uint32_t safetyLimit{ 1'000'000 };
+  static constexpr uint32_t safetyLimit{1'000'000};
   // solved grid needs to sum up to checkSum
-  static constexpr uint32_t checkSum{ 405 };
+  static constexpr uint32_t checkSum{405};
   // is thrown to exit recursive backtracking
-  class stopRecursion
-  {};
+  class stopRecursion {};
   //  methods
   // ------
   static inline void printLine();
@@ -30,7 +27,7 @@ private:
   void recursiveSolve();
   void printCheckSum() const;
 
-public:
+ public:
   Board();
   ~Board();
   uint16_t getCell(uint16_t row, uint16_t col) const;

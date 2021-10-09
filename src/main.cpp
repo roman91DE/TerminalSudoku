@@ -2,9 +2,7 @@
 
 #include "board.h"
 
-int
-main(int, char**)
-{
+int main(int, char**) {
   Board b;
   b.solve();
   b.printBoard();
