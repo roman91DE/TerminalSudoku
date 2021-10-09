@@ -148,16 +148,12 @@ void Board::recSolve()
                 for (uint16_t pval { 1 }; pval < 10; ++pval) {
                     if (isPossible(pval, rowIdx, colIdx)) {
                         setCell(pval, rowIdx, colIdx);
-                        if (isSolved()) {
-                            breakRecursion = true;
-                            return;
-                        }
                         recSolve();
                         clearCell(rowIdx, colIdx);
                     }
                 }
-                return;
             }
+            return;
         }
     }
 }
