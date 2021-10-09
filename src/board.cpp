@@ -149,17 +149,14 @@ void Board::recSolve()
                 for (uint16_t pval { 1 }; pval < 10; ++pval) {
                     if (isPossible(pval, rowIdx, colIdx)) {
                         setCell(pval, rowIdx, colIdx);
-                        if (isSolved()) {
-                            printBoard();
-                            std::cin >> c;
-                        } else {
-                            recSolve();
-                            clearCell(rowIdx, colIdx);
-                        }
+                        recSolve();
+                        clearCell(rowIdx, colIdx);
                     }
                 }
             }
         }
         return;
     }
+    printBoard();
+    std::cin >> c;
 }
