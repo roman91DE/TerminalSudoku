@@ -42,6 +42,7 @@ public:
   void startNewGame(Game::Difficulty difficulty);
   // void finishGame();
   static Game::Difficulty getDifficultyFromPlayer();
+  static void runGame();
 };
 
 #endif

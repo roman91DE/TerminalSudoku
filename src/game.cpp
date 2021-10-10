@@ -1,4 +1,5 @@
 #include "game.h"
+#include <fstream>
 
 #include <fmt/core.h>
 
@@ -99,4 +100,19 @@ uint16_t Game::getNumCells(Game::Difficulty difficulty)
     default:
         return 0;
     }
+}
+
+void Game::runGame()
+{
+    std::ifstream ifs;
+    std::string buffer;
+    ifs.open("/Users/rmn/code/c/sudoku/src/logo.txt"); // change to relative path
+    if (ifs.is_open()) {
+        while (getline(ifs, buffer)) {
+            fmt::print("{}\n", buffer);
+        }
+    }
+    // Game game = Game(Game::getDifficultyFromPlayer());
+    // game.printGameState();
+    // game.autoSolve();
 }
