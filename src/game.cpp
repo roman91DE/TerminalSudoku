@@ -117,21 +117,21 @@ void Game::displayLogo()
 void Game::runMainMenu()
 {
     Game::displayLogo();
-    fmt::print("Please select action:\n1 - Start a new Game\n2 - Exit Terminal SuDoKu\n-> ");
-    uint16_t choice;
-    std::cin >> choice;
-    switch (choice) {
-    case 1:
-        Game::startGame();
-        Game::runMainMenu();
-        break;
+    while (true) {
+        fmt::print("Please select action:\n1 - Start a new Game\n2 - Exit Terminal SuDoKu\n-> ");
+        uint16_t choice;
+        std::cin >> choice;
+        switch (choice) {
+        case 1:
+            Game::startGame();
+            break;
 
-    case 2:
-        return;
+        case 2:
+            return;
 
-    default:
-        fmt::print("Invalid Choice, please try again!\n");
-        Game::runMainMenu();
+        default:
+            fmt::print("Invalid Choice, please try again!\n");
+        }
     }
 }
 
