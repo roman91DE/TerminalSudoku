@@ -9,13 +9,12 @@
 
 class Game {
  private:
-  // structs
+  // structs/classes
   // -------------
   // represents an individual move by the player
-  struct Move {
-    uint16_t row, col, val;
-    Move(uint16_t _row, uint16_t _col, uint16_t _val);
-  };
+  struct Move;
+  // is used to determine the number of prefilled cells
+  enum class Difficulty;
   //  member variables
   // -----------------
   // points to current playing sudoku instance
@@ -23,25 +22,26 @@ class Game {
   // memory of past moves
   std::list<Game::Move>* moveMemoryPtr;
   uint32_t moveCounter;
+
   //  methods
   // ------
+  // return the number of prefilled cells for a given level of difficulty
+  uint16_t getNumCells(Game::Difficulty difficulty);
 
  public:
-  // structs
-  // -------
-  // is used to determine the number of prefilled cells
-  enum class Difficulty { easy = 0, medium = 1, hard = 2 };
+
   // interface
   // ---------
-  // construct an empty Game instance
-  Game();
-  // construct a partially filled Game
+  // construct a game with a partially filled sudoku board
   Game(Game::Difficulty difficulty);
   // free resources
   ~Game();
   void printGameState() const;
   // try to solve current board
   void autoSolve();
+  void startNewGame(Game::Difficulty difficulty);
+  void finishGame();
+  Game::Difficulty getDifficultyFromPlayer() const;
 };
 
 #endif
