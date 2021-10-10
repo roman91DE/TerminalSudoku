@@ -7,9 +7,8 @@
 #include "game.h"
 #include "sudoku.h"
 
-class Game
-{
-private:
+class Game {
+ private:
   // structs/classes
   // -------------
   // represents an individual move by the player
@@ -42,7 +41,7 @@ private:
   PlayMenuChoice runPlayMenu();
   static void runGame();
 
-public:
+ public:
   static void runMainMenu();
 };
 

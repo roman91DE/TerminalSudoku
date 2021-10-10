@@ -15,7 +15,6 @@ struct Game::Move {
     }
 };
 
-
 enum class Game::Difficulty { easy = 1,
     medium = 2,
     hard = 3 };
@@ -24,14 +23,11 @@ Game::Game(Game::Difficulty difficulty)
 
     : sudokuPtr(new Sudoku())
     , moveMemoryPtr(new std::list<Game::Move>())
-    ,moveCounter(0) 
-    
+    , moveCounter(0)
+
 {
     sudokuPtr->randomInit(getNumCells(difficulty));
 }
-
-
-
 
 Game::~Game()
 {
