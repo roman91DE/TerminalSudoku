@@ -10,8 +10,6 @@
 #include <exception>
 
 Board::Board()
-    : generator(new std::default_random_engine)
-    , distribution(new std::uniform_int_distribution<uint16_t>(0, 8))
 {
     for (auto& row : board)
         std::fill(row.begin(), row.end(), 0);
@@ -19,8 +17,6 @@ Board::Board()
 
 Board::~Board()
 {
-    delete generator;
-    delete distribution;
 }
 
 void Board::resetBoard()
@@ -104,9 +100,9 @@ bool Board::isPossible(uint16_t val, uint16_t row, uint16_t col) const
 void Board::randSet()
 {
     for (uint64_t counter { 0 }; counter < Board::safetyLimit; ++counter) {
-        uint16_t row = (*distribution)((*generator));
-        uint16_t col = (*distribution)((*generator));
-        uint16_t val = (*distribution)((*generator)) + 1;
+        uint16_t row = Board::distribution(Board::generator);
+        uint16_t col = Board::distribution(Board::generator);
+        uint16_t val = Board::distribution(Board::generator) + 1;
         if (isPossible(val, row, col)) {
             setCell(val, row, col);
             return;
@@ -117,8 +113,8 @@ void Board::randSet()
 void Board::randClear()
 {
     for (uint64_t counter { 0 }; counter < Board::safetyLimit; ++counter) {
-        uint16_t row = (*distribution)((*generator));
-        uint16_t col = (*distribution)((*generator));
+        uint16_t row = Board::distribution(Board::generator);
+        uint16_t col = Board::distribution(Board::generator);
         if (getCell(row, col) > 0) {
             clearCell(row, col);
             return;

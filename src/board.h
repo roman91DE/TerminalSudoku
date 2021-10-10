@@ -7,24 +7,28 @@
 
 class Board {
 private:
-    // member
-    // ------
+    // structs/enums
+    // ---------------
+    // is thrown to exit recursive backtracking
+    struct stopRecursion {
+    };
+    // member variables
+    // ---------------
+    // represents the current state of board
     std::array<std::array<uint16_t, 9>, 9> board;
     // random number factory
-    std::default_random_engine* generator;
-    std::uniform_int_distribution<uint16_t>* distribution;
+    static std::default_random_engine generator { std::default_random_engine };
+    static std::uniform_int_distribution<uint16_t> distribution { std::uniform_int_distribution<uint16_t>(0, 8) }
+    // static variables
+    // ---------------
     // safety limit to avoid infinite loops (should not be reached)
     static constexpr uint32_t safetyLimit { 1'000'000 };
     // solved grid needs to sum up to checkSum
     static constexpr uint16_t checkSum { 405 };
     // is used to randomize boards
     static constexpr uint16_t initSeed { 20 };
-    // is thrown to exit recursive backtracking
-    class stopRecursion {
-    };
-
-    //  methods
-    // ------
+    //  member methods
+    // ---------------
     static inline void printLine();
     void randSet();
     void randClear();

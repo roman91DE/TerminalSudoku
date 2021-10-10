@@ -1,6 +1,6 @@
 #include "sudoku.h"
 
-SudokuMove::SudokuMove(uint16_t _row, uint16_t _col, uint16_t _val)
+Sudoku::Move::Move(uint16_t _row, uint16_t _col, uint16_t _val)
     : row(_row)
     , col(_col)
     , val(_val)
@@ -9,22 +9,22 @@ SudokuMove::SudokuMove(uint16_t _row, uint16_t _col, uint16_t _val)
 
 Sudoku::Sudoku()
     : boardPtr(new Board())
-    , moveMemoryPtr(new std::list<SudokuMove>())
+    , moveMemoryPtr(new std::list<Sudoku::Move>())
 {
 }
 
-Sudoku::Sudoku(SudokuDifficulty difficulty)
+Sudoku::Sudoku(Sudoku::Difficulty difficulty)
 {
     uint16_t numCells { 10 };
 
     switch (difficulty) {
-    case SudokuDifficulty::easy:
+    case Sudoku::Difficulty::easy:
         numCells = 20;
         break;
-    case SudokuDifficulty::medium:
+    case Sudoku::Difficulty::medium:
         numCells = 30;
         break;
-    case SudokuDifficulty::hard:
+    case Sudoku::Difficulty::hard:
         numCells = 40;
         break;
     default:
