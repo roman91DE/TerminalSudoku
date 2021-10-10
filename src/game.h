@@ -33,13 +33,17 @@ class Game {
   static void displayLogo();
   void printGameState() const;
   // try to solve current board
-  void autoSolve();
-  bool isSolvable() const;
-  void startNewGame(Game::Difficulty difficulty);
-  // void finishGame();
-  static Game::Difficulty getDifficultyFromPlayer();
+
+  // play menu methods
   enum class PlayMenuChoice;
   PlayMenuChoice runAndReturnFromPlayMenu();
+  void autoSolve();
+  // bool isSolvable() const;
+  void startNewGame(Game::Difficulty difficulty);
+  // void finishGame();
+
+  static Game::Difficulty getDifficultyFromPlayer();
+
   static void runGame();
 
  public:
