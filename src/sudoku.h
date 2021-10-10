@@ -5,12 +5,14 @@
 #include <cstdint>
 #include <random>
 
-class Sudoku {
- private:
+class Sudoku
+{
+private:
   // structs/enums
   // ---------------
   // is thrown to exit recursive backtracking
-  struct stopRecursion {};
+  struct stopRecursion
+  {};
   // member variables
   // ---------------
   // represents the current state of the sudoku board
@@ -19,15 +21,17 @@ class Sudoku {
   // ---------------
   // random number factory
   inline static std::default_random_engine generator{
-      std::default_random_engine()};
+    std::default_random_engine()
+  };
   inline static std::uniform_int_distribution<uint16_t> distribution{
-      std::uniform_int_distribution<uint16_t>(0, 8)};
+    std::uniform_int_distribution<uint16_t>(0, 8)
+  };
   // safety limit to avoid infinite loops (should not be reached)
-  static constexpr uint32_t safetyLimit{1'000'000};
+  static constexpr uint32_t safetyLimit{ 1'000'000 };
   // solved grid needs to sum up to checkSum
-  static constexpr uint16_t checkSum{405};
+  static constexpr uint16_t checkSum{ 405 };
   // is used to randomize sudokus
-  static constexpr uint16_t initSeed{20};
+  static constexpr uint16_t initSeed{ 20 };
   //  member methods
   // ---------------
   static inline void printLine();
@@ -41,7 +45,7 @@ class Sudoku {
   // print current checksum (for debugging)
   void printCheckSum() const;
 
- public:
+public:
   // sudoku interface
   // ---------------
   Sudoku();

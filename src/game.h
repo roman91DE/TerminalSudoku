@@ -7,8 +7,9 @@
 #include "game.h"
 #include "sudoku.h"
 
-class Game {
- private:
+class Game
+{
+private:
   // structs/classes
   // -------------
   // represents an individual move by the player
@@ -28,7 +29,7 @@ class Game {
   // return the number of prefilled cells for a given level of difficulty
   uint16_t getNumCells(Game::Difficulty difficulty);
 
- public:
+public:
   // interface
   // ---------
   // construct a game with a partially filled sudoku board
