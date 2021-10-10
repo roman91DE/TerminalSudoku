@@ -15,8 +15,7 @@ Sudoku::Sudoku()
 
 Sudoku::Sudoku(SudokuDifficulty difficulty)
 {
-
-    uint16_t numCells { 30 };
+    uint16_t numCells { 10 };
 
     switch (difficulty) {
     case SudokuDifficulty::easy:
