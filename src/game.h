@@ -39,8 +39,8 @@ private:
   // void finishGame();
   static Game::Difficulty getDifficultyFromPlayer();
   enum class PlayMenuChoice;
-  PlayMenuChoice getFromPlayMenu();
-  static void startGame();
+  PlayMenuChoice runPlayMenu();
+  static void runGame();
 
 public:
   static void runMainMenu();

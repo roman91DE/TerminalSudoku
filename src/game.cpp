@@ -144,12 +144,16 @@ enum class Game::PlayMenuChoice {
     toMainMenu
 };
 
-void Game::startGame()
+void Game::runGame()
 {
     Game game = Game(Game::getDifficultyFromPlayer());
-    Game::PlayMenuChoice usrInput { Game::PlayMenuChoice::init };
-    while (usrInput != Game::PlayMenuChoice::toMainMenu) {
-        usrInput = game.getFromPlayMenu();
+    Game::PlayMenuChoice userRoundChoice { Game::PlayMenuChoice::init };
+    while (userRoundChoice != Game::PlayMenuChoice::toMainMenu) {
+        userRoundChoice = game.runPlayMenu();
     }
-    return;
+}
+
+Game::PlayMenuChoice Game::runPlayMenu()
+{
+    // implement main logic of game (counter, memory, set, restart, solve)
 }
