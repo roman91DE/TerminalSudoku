@@ -9,7 +9,7 @@
 class Sudoku {
  private:
   // structs/enums
-  // ----------
+  // -------------
   // represents an individual move by the player
   struct Move {
     uint16_t row, col, val;
@@ -17,15 +17,15 @@ class Sudoku {
   };
   // is used to determine the number of prefilled cells
   enum class Difficulty { easy = 0, medium = 1, hard = 2 };
-  //  members
-  // -------
+  //  member variables
+  // -----------------
   // points to current playing board instance
   Board* boardPtr;
   // memory of past moves
   std::list<Sudoku::Move>* moveMemoryPtr;
+  uint32_t moveCounter;
   //  methods
   // ------
-
  public:
   // construct an empty Sudoku instance
   Sudoku();
