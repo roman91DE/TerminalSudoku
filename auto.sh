@@ -1,9 +1,15 @@
 #!/bin/sh
 
-# automate src formatting and git 
 
+# pull changes
 git pull
-clang-format -style='google' -i src/*.*
+
+# format implementations
+clang-format -style='google' -i src/*.cpp 
+# .. and header files
+clang-format -style='chromium' -i src/*.h
+
+# push and commit
 git add *
 git commit -m "auto commit"
 git push
