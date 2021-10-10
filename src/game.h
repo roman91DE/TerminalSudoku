@@ -29,7 +29,6 @@ class Game {
   uint16_t getNumCells(Game::Difficulty difficulty);
 
  public:
-
   // interface
   // ---------
   // construct a game with a partially filled sudoku board
@@ -40,8 +39,8 @@ class Game {
   // try to solve current board
   void autoSolve();
   void startNewGame(Game::Difficulty difficulty);
-  void finishGame();
-  Game::Difficulty getDifficultyFromPlayer() const;
+  // void finishGame();
+  static Game::Difficulty getDifficultyFromPlayer();
 };
 
 #endif
