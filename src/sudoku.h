@@ -22,14 +22,16 @@ class Sudoku {
   // memory of past moves
   std::list<Sudoku::Move>* moveMemoryPtr;
   uint32_t moveCounter;
-
   //  methods
   // ------
+
  public:
   // structs
   // -------
   // is used to determine the number of prefilled cells
   enum class Difficulty { easy = 0, medium = 1, hard = 2 };
+  // interface
+  // ---------
   // construct an empty Sudoku instance
   Sudoku();
   // construct a partially filled Sudoku
@@ -37,6 +39,9 @@ class Sudoku {
   // free resources
   ~Sudoku();
   void printSudokuState() const;
+  // try to solve current board
+  void autoSolve();
+
 };
 
 #endif

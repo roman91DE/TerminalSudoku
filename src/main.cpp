@@ -6,5 +6,6 @@
 int main(int, char**) {
   Sudoku s = Sudoku(Sudoku::Difficulty::medium);
   s.printSudokuState();
+  s.autoSolve();
   return 0;
 }

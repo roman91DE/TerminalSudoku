@@ -41,3 +41,12 @@ void Sudoku::printSudokuState() const {
   fmt::print("Number of moves: {}\n\n", moveCounter);
   boardPtr->printBoard();
 }
+
+void Sudoku::autoSolve() {
+    if (boardPtr->solve()) {
+        boardPtr->printBoard();
+    } else {
+        fmt::print("The current state of the Sudoku game is not solvable!\n");
+        // restart game here
+    }
+}
