@@ -1,5 +1,5 @@
 build/
-build/*
+CMakeFiles/
 .ipynb*/
 .vscode/
 test.cpp
