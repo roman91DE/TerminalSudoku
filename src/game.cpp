@@ -123,6 +123,7 @@ void Game::runMainMenu()
     switch (choice) {
     case 1:
         Game::startGame();
+        Game::runMainMenu();
         break;
 
     case 2:
@@ -134,9 +135,21 @@ void Game::runMainMenu()
     }
 }
 
+enum class Game::PlayMenuChoice {
+    init = 0,
+    setCell,
+    reverseLast,
+    autoSolve,
+    startNew,
+    toMainMenu
+};
+
 void Game::startGame()
 {
     Game game = Game(Game::getDifficultyFromPlayer());
-    game.printGameState();
-    game.runPlayMenu();
+    Game::PlayMenuChoice usrInput { Game::PlayMenuChoice::init };
+    while (usrInput != Game::PlayMenuChoice::toMainMenu) {
+        usrInput = game.getFromPlayMenu();
+    }
+    return;
 }

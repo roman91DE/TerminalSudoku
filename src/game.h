@@ -39,7 +39,7 @@ private:
   // void finishGame();
   static Game::Difficulty getDifficultyFromPlayer();
   enum class PlayMenuChoice;
-  PlayMenuChoice runPlayMenu();
+  PlayMenuChoice getFromPlayMenu();
   static void startGame();
 
 public:
