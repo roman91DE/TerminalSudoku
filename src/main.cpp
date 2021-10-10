@@ -1,11 +1,11 @@
 #include <fmt/core.h>
 
-#include "board.h"
+#include "game.h"
 #include "sudoku.h"
 
 int main(int, char**) {
-  Sudoku s = Sudoku(Sudoku::Difficulty::medium);
-  s.printSudokuState();
-  s.autoSolve();
+  Game game = Game(Game::Difficulty::medium);
+  game.printGameState();
+  game.autoSolve();
   return 0;
 }
