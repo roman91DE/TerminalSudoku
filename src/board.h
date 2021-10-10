@@ -18,10 +18,10 @@ class Board {
   // static variables
   // ---------------
   // random number factory
-  inline static std::default_random_engine generator =
-      std::default_random_engine();
-  inline static std::uniform_int_distribution<uint16_t> distribution =
-      std::uniform_int_distribution<uint16_t>(0, 8);
+  inline static std::default_random_engine generator{
+      std::default_random_engine()};
+  inline static std::uniform_int_distribution<uint16_t> distribution{
+      std::uniform_int_distribution<uint16_t>(0, 8)};
   // safety limit to avoid infinite loops (should not be reached)
   static constexpr uint32_t safetyLimit{1'000'000};
   // solved grid needs to sum up to checkSum
