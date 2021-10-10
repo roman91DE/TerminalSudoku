@@ -47,16 +47,7 @@ void Game::autoSolve()
         sudokuPtr->printSudoku();
     } else {
         fmt::print(
-            "The current state of the game is not solvable!\nStart a new Game? "
-            "[y/N]\n");
-        char usrInput;
-        std::cin >> usrInput;
-        if ((usrInput == 'y') || (usrInput == 'Y'))
-            startNewGame(Game::getDifficultyFromPlayer());
-        else {
-            // finishGame();
-            return;
-        }
+            "The game can not be solved in it's current state!\n");
     }
 }
 
@@ -141,6 +132,7 @@ enum class Game::PlayMenuChoice {
     init = 0,
     setCell,
     reverseLast,
+    checkIfSolvable,
     autoSolve,
     startNew,
     toMainMenu
@@ -149,13 +141,13 @@ enum class Game::PlayMenuChoice {
 void Game::runGame()
 {
     Game game = Game(Game::getDifficultyFromPlayer());
-    Game::PlayMenuChoice userRoundChoice { Game::PlayMenuChoice::init };
-    while (userRoundChoice != Game::PlayMenuChoice::toMainMenu) {
-        userRoundChoice = game.runPlayMenu();
+    Game::PlayMenuChoice usersLastChoice { Game::PlayMenuChoice::init };
+    while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
+        usersLastChoice = game.runAndReturnFromPlayMenu();
     }
 }
 
-Game::PlayMenuChoice Game::runPlayMenu()
+Game::PlayMenuChoice Game::runAndReturnFromPlayMenu()
 {
     // implement main logic of game (counter, memory, set, restart, solve)
     return Game::PlayMenuChoice::init;

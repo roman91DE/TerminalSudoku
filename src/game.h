@@ -34,11 +34,12 @@ class Game {
   void printGameState() const;
   // try to solve current board
   void autoSolve();
+  bool isSolvable() const;
   void startNewGame(Game::Difficulty difficulty);
   // void finishGame();
   static Game::Difficulty getDifficultyFromPlayer();
   enum class PlayMenuChoice;
-  PlayMenuChoice runPlayMenu();
+  PlayMenuChoice runAndReturnFromPlayMenu();
   static void runGame();
 
  public:
