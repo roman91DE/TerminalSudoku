@@ -16,11 +16,11 @@ private:
     // ---------------
     // represents the current state of board
     std::array<std::array<uint16_t, 9>, 9> board;
-    // random number factory
-    static std::default_random_engine generator { std::default_random_engine };
-    static std::uniform_int_distribution<uint16_t> distribution { std::uniform_int_distribution<uint16_t>(0, 8) }
     // static variables
     // ---------------
+    // random number factory
+    inline static std::default_random_engine generator = std::default_random_engine();
+    inline static std::uniform_int_distribution<uint16_t> distribution = std::uniform_int_distribution<uint16_t>(0, 8);
     // safety limit to avoid infinite loops (should not be reached)
     static constexpr uint32_t safetyLimit { 1'000'000 };
     // solved grid needs to sum up to checkSum
@@ -30,14 +30,19 @@ private:
     //  member methods
     // ---------------
     static inline void printLine();
+    // tries to set a random cell of the grid
     void randSet();
+    // tries to clear a random cell of the grid
     void randClear();
     // implements recursive backtracking algorithm (internal method, should not be
     // called directly)
     void recursiveSolve();
+    // print current checksum (for debugging)
     void printCheckSum() const;
 
 public:
+    // interface
+    // ---------------
     Board();
     ~Board();
     uint16_t getCell(uint16_t row, uint16_t col) const;
