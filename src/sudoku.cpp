@@ -8,13 +8,13 @@
 #include <iostream>
 
 Sudoku::Sudoku() {
-  for (auto& row : sudoku) std::fill(row.begin(), row.end(), 0);
+  for (auto& row : board) std::fill(row.begin(), row.end(), 0);
 }
 
 Sudoku::~Sudoku() {}
 
 void Sudoku::resetSudoku() {
-  for (auto& row : sudoku) std::fill(row.begin(), row.end(), 0);
+  for (auto& row : board) std::fill(row.begin(), row.end(), 0);
 }
 
 void Sudoku::printLine() { fmt::print(" +-----------+\n"); }
@@ -24,7 +24,7 @@ void Sudoku::printSudoku() const {
   fmt::print("  123 456 789 \n");
   Sudoku::printLine();
 
-  for (const auto& row : sudoku) {
+  for (const auto& row : board) {
     if ((rowCount++) == 3) {
       Sudoku::printLine();
       rowCount = 1;
@@ -48,11 +48,11 @@ void Sudoku::printSudoku() const {
 }
 
 void Sudoku::setCell(uint16_t val, uint16_t row, uint16_t col) {
-  this->sudoku[row][col] = val;
+  this->board[row][col] = val;
 }
 
 uint16_t Sudoku::getCell(uint16_t row, uint16_t col) const {
-  return (this->sudoku[row][col]);
+  return (this->board[row][col]);
 }
 
 void Sudoku::clearCell(uint16_t row, uint16_t col) {
@@ -104,7 +104,7 @@ void Sudoku::randClear() {
 
 void Sudoku::printCheckSum() const {
   uint32_t checkSum{0};
-  for (const auto& row : sudoku) {
+  for (const auto& row : board) {
     for (const auto& col : row) {
       checkSum += col;
     }
@@ -114,7 +114,7 @@ void Sudoku::printCheckSum() const {
 
 bool Sudoku::isSolved() const {
   uint32_t sum{0};
-  for (const auto& row : sudoku) {
+  for (const auto& row : board) {
     for (const auto& col : row) {
       sum += col;
     }

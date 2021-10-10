@@ -13,8 +13,8 @@ class Sudoku {
   struct stopRecursion {};
   // member variables
   // ---------------
-  // represents the current state of sudoku
-  std::array<std::array<uint16_t, 9>, 9> sudoku;
+  // represents the current state of the sudoku board
+  std::array<std::array<uint16_t, 9>, 9> board;
   // static variables
   // ---------------
   // random number factory

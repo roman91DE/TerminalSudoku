@@ -2,6 +2,8 @@
 
 #include <fmt/core.h>
 
+#include "sudoku.h"
+
 Game::Move::Move(uint16_t _row, uint16_t _col, uint16_t _val)
     : row(_row), col(_col), val(_val) {}
 

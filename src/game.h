@@ -1,9 +1,10 @@
-#ifndef __SUDOKUHEADER__
-#define __SUDOKUHEADER__
+#ifndef __GAMEHEADER__
+#define __GAMEHEADER__
 
 #include <cstdint>
 #include <list>
 
+#include "game.h"
 #include "sudoku.h"
 
 class Game {
