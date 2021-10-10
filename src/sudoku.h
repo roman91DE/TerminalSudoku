@@ -7,6 +7,7 @@
 #include "board.h"
 
 class Sudoku {
+ private:
   // structs/enums
   // ----------
   // represents an individual move by the player
@@ -16,10 +17,9 @@ class Sudoku {
   };
   // is used to determine the number of prefilled cells
   enum class Difficulty { easy = 0, medium = 1, hard = 2 };
-
- private:
   //  members
-  // ------
+  // -------
+  // points to current playing board instance
   Board* boardPtr;
   // memory of past moves
   std::list<Sudoku::Move>* moveMemoryPtr;
@@ -33,6 +33,7 @@ class Sudoku {
   Sudoku(Difficulty difficulty);
   // free resources
   ~Sudoku();
+  void printSudokuState() const;
 };
 
 #endif

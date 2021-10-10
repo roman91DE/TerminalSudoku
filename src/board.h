@@ -51,6 +51,7 @@ class Board {
   void clearCell(uint16_t row, uint16_t col);
   bool isPossible(uint16_t val, uint16_t row, uint16_t col) const;
   bool isSolved() const;
+  // empty all cells
   void resetBoard();
   void printBoard() const;
   // starts & stops recursive backtracking algorithm
