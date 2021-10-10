@@ -175,11 +175,12 @@ void Board::recursiveSolve()
 
 void Board::randomInit(uint16_t numCells)
 {
-    // fill board with some random values
+    // fill board with n random values (n = Board::initSeed)
     for (uint16_t counter { 0 }; counter < Board::initSeed; ++counter)
         randSet();
+    // solve board
     solve();
-    //
+    // safety check: board must be solvable
     if (!isSolved()) {
         std::cerr << "Backtracking failed at solving the current Board!\nRepeating "
                      "randomization...\n";

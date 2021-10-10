@@ -41,7 +41,7 @@ private:
     void printCheckSum() const;
 
 public:
-    // interface
+    // board interface
     // ---------------
     Board();
     ~Board();
