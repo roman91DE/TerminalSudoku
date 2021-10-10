@@ -1,23 +1,35 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(CL_Sudoku VERSION 0.1.0)
+project(TerminalSuDoKu VERSION 1.0)
 
-include(CTest)
-enable_testing()
+add_compile_options(
+  # use c++17 
+  -std=c++17
+  # set compiler warnings to maximum
+  -Wall
+  -Wextra
+  -Wpedantic
+  -Werror
+)
+
+# include(CTest)
+# enable_testing()
+
 include_directories(
   src
 )
 
 add_executable(
-  CL_Sudoku
+  TerminalSuDoKu
   src/main.cpp
   src/sudoku.cpp
   src/game.cpp
   )
 
+# locate fmt library
 find_package(fmt)
-
+# link project to fmt
 target_link_libraries(
-  CL_Sudoku fmt::fmt
+  TerminalSuDoKu fmt::fmt
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
