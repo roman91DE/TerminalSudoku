@@ -2,6 +2,6 @@
 
 int main()
 {
-    Game::runGame();
+    Game::runMainMenu();
     return 0;
 }

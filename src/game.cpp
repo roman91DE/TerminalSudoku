@@ -102,7 +102,7 @@ uint16_t Game::getNumCells(Game::Difficulty difficulty)
     }
 }
 
-void Game::runGame()
+void Game::displayLogo()
 {
     std::ifstream ifs;
     std::string buffer;
@@ -112,7 +112,31 @@ void Game::runGame()
             fmt::print("{}\n", buffer);
         }
     }
-    // Game game = Game(Game::getDifficultyFromPlayer());
-    // game.printGameState();
-    // game.autoSolve();
+}
+
+void Game::runMainMenu()
+{
+    Game::displayLogo();
+    fmt::print("Please select action:\n1 - Start a new Game\n2 - Exit Terminal SuDoKu\n-> ");
+    uint16_t choice;
+    std::cin >> choice;
+    switch (choice) {
+    case 1:
+        Game::startGame();
+        break;
+
+    case 2:
+        return;
+
+    default:
+        fmt::print("Invalid Choice, please try again!\n");
+        Game::runMainMenu();
+    }
+}
+
+void Game::startGame()
+{
+    Game game = Game(Game::getDifficultyFromPlayer());
+    game.printGameState();
+    game.runPlayMenu();
 }

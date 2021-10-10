@@ -23,26 +23,27 @@ private:
   // memory of past moves
   std::list<Game::Move>* moveMemoryPtr;
   uint32_t moveCounter;
-
   //  methods
   // ------
-  // return the number of prefilled cells for a given level of difficulty
-  uint16_t getNumCells(Game::Difficulty difficulty);
-
-public:
-  // interface
-  // ---------
   // construct a game with a partially filled sudoku board
   Game(Game::Difficulty difficulty);
   // free resources
   ~Game();
+  // return the number of prefilled cells for a given level of difficulty
+  uint16_t getNumCells(Game::Difficulty difficulty);
+  static void displayLogo();
   void printGameState() const;
   // try to solve current board
   void autoSolve();
   void startNewGame(Game::Difficulty difficulty);
   // void finishGame();
   static Game::Difficulty getDifficultyFromPlayer();
-  static void runGame();
+  enum class PlayMenuChoice;
+  PlayMenuChoice runPlayMenu();
+  static void startGame();
+
+public:
+  static void runMainMenu();
 };
 
 #endif
