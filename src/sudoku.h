@@ -6,8 +6,7 @@
 #include <random>
 
 class Sudoku {
-
-  public:
+ public:
   Sudoku();
   Sudoku(const Sudoku &sudoku);
   ~Sudoku();
@@ -21,7 +20,7 @@ class Sudoku {
   bool solve();
   void randomInit(uint16_t numCells);
 
-  private:
+ private:
   std::array<std::array<uint16_t, 9>, 9> board;
   // random number factory
   inline static std::default_random_engine generator{

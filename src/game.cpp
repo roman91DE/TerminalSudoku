@@ -13,6 +13,10 @@ struct Game::Move {
 
 enum class Game::Difficulty { easy = 1, medium = 2, hard = 3 };
 
+enum class Game::PlayMenuChoice {
+  init = 0, enterValue, toMainMenu, invalidChoice
+};
+
 Game::Game(Game::Difficulty difficulty)
 
     : sudokuPtr(new Sudoku()),
@@ -33,7 +37,7 @@ void Game::printGameState() const {
   sudokuPtr->printSudoku();
 }
 
-void Game::autoSolve() {
+void Game::tryRecSolve() {
   if (sudokuPtr->solve()) {
     sudokuPtr->printSudoku();
   } else {
@@ -43,7 +47,7 @@ void Game::autoSolve() {
 
 Game::Difficulty Game::getDifficultyFromPlayer() {
   fmt::print("Choose Level of Difficulty\n1 - Easy\n2 - Medium\n3 - Hard\n:");
-  uint16_t usrInput{42};
+  uint16_t usrInput{0};
   std::cin >> usrInput;
   switch (usrInput) {
     case 1:
@@ -98,12 +102,12 @@ void Game::runMainMenu() {
   while (true) {
     fmt::print(
         "Please select action:\n1 - Start a new Game\n2 - Exit Terminal "
-        "SuDoKu\n-> ");
+        "SuDoKu\n:");
     uint16_t choice;
     std::cin >> choice;
     switch (choice) {
       case 1:
-        Game::runGame();
+        Game::startGameLoop();
         break;
 
       case 2:
@@ -115,17 +119,9 @@ void Game::runMainMenu() {
   }
 }
 
-enum class Game::PlayMenuChoice {
-  init = 0,
-  setCell,
-  reverseLast,
-  checkIfSolvable,
-  autoSolve,
-  startNew,
-  toMainMenu
-};
 
-void Game::runGame() {
+
+void Game::startGameLoop() {
   Game game = Game(Game::getDifficultyFromPlayer());
   Game::PlayMenuChoice usersLastChoice{Game::PlayMenuChoice::init};
   while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
@@ -134,6 +130,29 @@ void Game::runGame() {
 }
 
 Game::PlayMenuChoice Game::runAndReturnFromPlayMenu() {
+  // display 
+  printGameState();
+  fmt::print("1 - Enter Value\n2 - Reverse last\n");
+  fmt::print("Select action\n:");
+
+  int userChoice{0};
+  std::cin >> userChoice;
+
+  switch (userChoice) {
+  case 1:  // =1
+    try {
+      fmt::print("This works :-)\n");
+      // ...
+    } catch (const std::invalid_argument &err) {
+      fmt::print("Invalid operation, aborted action!\n");
+      return Game::PlayMenuChoice::init;
+    }
+    return Game::PlayMenuChoice::enterValue;
+  
+ default:
+    return Game::PlayMenuChoice::invalidChoice;;
+  }
+
   // implement main logic of game (counter, memory, set, restart, solve)
-  return Game::PlayMenuChoice::init;
+  
 }

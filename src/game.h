@@ -8,46 +8,34 @@
 #include "sudoku.h"
 
 class Game {
+ public:
+  static void runMainMenu();
+
  private:
-  // structs/classes
-  // -------------
-  // represents an individual move by the player
+  // helper constructs
   struct Move;
-  // is used to determine the number of prefilled cells
+public:
   enum class Difficulty;
-  //  member variables
-  // -----------------
-  // points to current playing sudoku instance
+  enum class PlayMenuChoice;
+ private:
+  // member variables
   Sudoku* sudokuPtr;
-  // memory of past moves
   std::list<Game::Move>* moveMemoryPtr;
   uint32_t moveCounter;
-  //  methods
-  // ------
-  // construct a game with a partially filled sudoku board
+  // methods
   Game(Game::Difficulty difficulty);
-  // free resources
   ~Game();
   // return the number of prefilled cells for a given level of difficulty
   uint16_t getNumCells(Game::Difficulty difficulty);
   static void displayLogo();
   void printGameState() const;
-  // try to solve current board
-
-  // play menu methods
-  enum class PlayMenuChoice;
-  PlayMenuChoice runAndReturnFromPlayMenu();
-  void autoSolve();
+Game::PlayMenuChoice  runAndReturnFromPlayMenu();
+  void tryRecSolve();
   // bool isSolvable() const;
   void startNewGame(Game::Difficulty difficulty);
   // void finishGame();
-
   static Game::Difficulty getDifficultyFromPlayer();
-
-  static void runGame();
-
- public:
-  static void runMainMenu();
+  static void startGameLoop();
 };
 
 #endif

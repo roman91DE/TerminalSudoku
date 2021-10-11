@@ -2,19 +2,19 @@
 #include "sudoku.h"
 
 #include <fmt/core.h>
+
 #include <algorithm>
-#include <iterator>
 #include <exception>
 #include <iostream>
+#include <iterator>
 
 Sudoku::Sudoku() {
   for (auto& row : board) std::fill(row.begin(), row.end(), 0);
 }
 
-Sudoku::Sudoku(const Sudoku &sudoku) {
+Sudoku::Sudoku(const Sudoku& sudoku) {
   std::copy(sudoku.board.begin(), sudoku.board.end(), this->board.begin());
 }
-
 
 Sudoku::~Sudoku() {}
 
@@ -107,7 +107,6 @@ void Sudoku::randClear() {
   }
 }
 
-
 bool Sudoku::isSolved() const {
   uint32_t sum{0};
   for (const auto& row : board) {
@@ -161,4 +160,3 @@ void Sudoku::randomInit(uint16_t numCells) {
   // delete random cells until numCells are left
   for (uint16_t counter{9 * 9}; counter > numCells; --counter) randClear();
 }
-
