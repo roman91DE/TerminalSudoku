@@ -3,12 +3,18 @@
 
 #include <fmt/core.h>
 #include <algorithm>
+#include <iterator>
 #include <exception>
 #include <iostream>
 
 Sudoku::Sudoku() {
   for (auto& row : board) std::fill(row.begin(), row.end(), 0);
 }
+
+Sudoku::Sudoku(const Sudoku &sudoku) {
+  std::copy(sudoku.board.begin(), sudoku.board.end(), this->board.begin());
+}
+
 
 Sudoku::~Sudoku() {}
 
@@ -155,3 +161,4 @@ void Sudoku::randomInit(uint16_t numCells) {
   // delete random cells until numCells are left
   for (uint16_t counter{9 * 9}; counter > numCells; --counter) randClear();
 }
+
