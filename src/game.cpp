@@ -36,6 +36,12 @@ void Game::tryRecSolve()
     }
 }
 
+void Game::flushStdin()
+{
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
 Game::Difficulty Game::getDifficultyFromPlayer()
 {
 
@@ -44,9 +50,8 @@ Game::Difficulty Game::getDifficultyFromPlayer()
     std::cin >> usrInput;
     if (usrInput < static_cast<uint16_t>(Game::Difficulty::easy) || usrInput > static_cast<uint16_t>(Game::Difficulty::hard)) {
         fmt::print("{} is not a valid Choice!\n", usrInput);
-        // ignore previous input and reset state of cin
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        Game::flushStdin();
+
         return Game::getDifficultyFromPlayer();
     }
     return static_cast<Game::Difficulty>(usrInput);
@@ -92,23 +97,24 @@ enum class Game::MainMenuChoice { startNewGame = 1,
 void Game::runMainMenu()
 {
     Game::displayLogo();
-    while (true) {
-        fmt::print(
-            "Please select action:\n1 - Start a new Game\n2 - Exit Terminal "
-            "SuDoKu\n:");
+    fmt::print(
+        "Please select action:\n1 - Start a new Game\n2 - Exit Terminal "
+        "SuDoKu\n:");
 
-        uint16_t inputVal;
-        std::cin >> inputVal;
-        Game::MainMenuChoice usrChoice = static_cast<Game::MainMenuChoice>(inputVal);
-        switch (usrChoice) {
-        case Game::MainMenuChoice::startNewGame:
-            Game::startGameLoop();
-            break;
-        case Game::MainMenuChoice::exitTerminalSudoku:
-            return;
-        default:
-            fmt::print("Invalid Choice, please try again!\n");
-        }
+    uint16_t inputVal { 0 };
+    std::cin >> inputVal;
+    if ((inputVal < static_cast<uint16_t>(Game::MainMenuChoice::startNewGame)) || (inputVal > static_cast<uint16_t>(Game::MainMenuChoice::exitTerminalSudoku))) {
+        Game::flushStdin();
+        Game::runMainMenu();
+        fmt::print("Invalid Choice, please try again!\n");
+    }
+    Game::MainMenuChoice usrChoice = static_cast<Game::MainMenuChoice>(inputVal);
+    switch (usrChoice) {
+    case Game::MainMenuChoice::startNewGame:
+        Game::startGameLoop();
+        break;
+    case Game::MainMenuChoice::exitTerminalSudoku:
+        return;        
     }
 }
 
@@ -134,6 +140,8 @@ Game::PlayMenuChoice Game::runAndReturnFromPlayMenu()
 {
     // display
     printGameState();
+    if (std::cin.bad())
+        Game::flushStdin();
     fmt::print("1 - Enter Value\n2 - Reverse last\n3 - Start new Game\n");
     fmt::print("Select action\n:");
 
@@ -141,9 +149,6 @@ Game::PlayMenuChoice Game::runAndReturnFromPlayMenu()
     std::cin >> inputVal;
     if (inputVal <= (static_cast<int32_t>(Game::PlayMenuChoice::init) || inputVal >= (static_cast<int32_t>(Game::PlayMenuChoice::invalidChoice)))) {
         fmt::print("Invalid Choice - Please try again!\n");
-        // ignore previous input and reset state of cin
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         return Game::runAndReturnFromPlayMenu();
     }
     Game::PlayMenuChoice usrChoice = static_cast<Game::PlayMenuChoice>(inputVal);
@@ -175,14 +180,25 @@ struct Game::Move {
     }
 };
 
-void Game::promptEntry()
+void Game::promptEntry() // make bulletproof
 {
-    uint16_t row, col, value;
-    fmt::print("Enter Row    = ");
-    std::cin >> row;
-    fmt::print("Enter Column = ");
+    uint16_t row { 0 }, col { 0 }, value { 0 };
+    fmt::print("Enter Row: ");
+    if ((!std::cin >> row) || ((row < 1) || (row > 9))) {
+        fmt::print("Invalid Input: Rows are indexed from {} to {}", 1, 9);
+        return;
+    }
+    fmt::print("Enter Column: ");
+    if ((!std::cin >> col) || ((col < 1) || (col > 9))) {
+        fmt::print("Invalid Input: Columns are indexed from {} to {}", 1, 9);
+        return;
+    }
     std::cin >> col;
-    fmt::print("Enter Value  = ");
+    fmt::print("Enter Value: ");
+    if ((!std::cin >> value) || ((value < 1) || (value > 9))) {
+        fmt::print("Invalid Input: Values can range from {} to {}", 1, 9);
+        return;
+    }
     std::cin >> value;
     // convert row and col to 0 index
     --row;

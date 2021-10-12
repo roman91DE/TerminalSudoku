@@ -42,6 +42,7 @@ private:
     static Game::Difficulty getDifficultyFromPlayer();
     static void startGameLoop();
     void promptEntry();
+    static void flushStdin();
 };
 
 #endif
