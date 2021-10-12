@@ -2,20 +2,18 @@
 #define __GAMEHEADER__
 
 #include <cstdint>
-#include <list>
 #include <memory>
-
-#include "game.h"
+#include <vector>
 #include "sudoku.h"
 
 class Game {
+
 public:
     static void runMainMenu();
 
+// helper constructs
 private:
-    // helper constructs
     struct Move;
-
 public:
     enum class Difficulty;
     enum class PlayMenuChoice;
@@ -24,7 +22,6 @@ public:
 private:
     // member variables
     std::unique_ptr<Sudoku> sudokuPtr;
-    // Sudoku* sudokuPtr;
     std::vector<Game::Move> moveMemoryPtr;
     uint32_t moveCounter;
     // methods

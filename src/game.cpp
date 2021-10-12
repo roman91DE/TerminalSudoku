@@ -136,7 +136,7 @@ void Game::startGameLoop()
     }
 }
 
-Game::PlayMenuChoice Game::runAndReturnFromPlayMenu()
+Game::PlayMenuChoice Game::runAndReturnFromPlayMenu()       // split into displayPlayMenu() and getFromPlayMenu() ?
 {
     // display
     printGameState();
