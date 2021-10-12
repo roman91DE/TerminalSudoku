@@ -153,6 +153,7 @@ Game::PlayMenuChoice Game::runAndReturnFromPlayMenu() {
     return Game::PlayMenuChoice::invalidChoice;;
   }
 
+  // to do
   // implement main logic of game (counter, memory, set, restart, solve)
   
 }

@@ -4,7 +4,6 @@
 #include <array>
 #include <cstdint>
 #include <random>
-
 class Sudoku {
  public:
   Sudoku();

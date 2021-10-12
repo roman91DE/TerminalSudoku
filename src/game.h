@@ -6,6 +6,7 @@
 
 #include "game.h"
 #include "sudoku.h"
+#include <memory>
 
 class Game {
  public:
