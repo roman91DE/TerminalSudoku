@@ -8,7 +8,7 @@
       "type": "lldb",
       "request": "launch",
       "name": "Debug",
-      "program": "${workspaceFolder}/build/CL_Sudoku",
+      "program": "${workspaceFolder}/build/TerminalSudoku",
       "args": [],
       "cwd": "${workspaceFolder}"
     }
