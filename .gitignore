@@ -1,6 +1,6 @@
 build/
 CMakeFiles/
 .ipynb*/
-.vscode/
 test.cpp
+test
 *.ipynb

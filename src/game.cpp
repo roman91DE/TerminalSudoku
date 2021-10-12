@@ -184,18 +184,18 @@ void Game::promptEntry() // make bulletproof
 {
     uint16_t row { 0 }, col { 0 }, value { 0 };
     fmt::print("Enter Row: ");
-    if ((!std::cin >> row) || ((row < 1) || (row > 9))) {   // use boolean expression for side effect AND checks range
-        fmt::print("Invalid Input: Rows are indexed from 1 - 9");
+    if ((!(std::cin >> row)) || ((row < 1) || (row > 9))) {   // use boolean expression for side effect AND checks ranges
+        fmt::print("Invalid Input: Rows are indexed from 1 - 9\n");
         return;
     }
     fmt::print("Enter Column: ");
-    if ((!std::cin >> col) || ((col < 1) || (col > 9))) {     // ...
-        fmt::print("Invalid Input: Columns are indexed from 1 - 9");
+    if ((!(std::cin >> col)) || ((col < 1) || (col > 9))) {     // ...
+        fmt::print("Invalid Input: Columns are indexed from 1 - 9\n");
         return;
     }
     fmt::print("Enter Value: ");
-    if ((!std::cin >> value) || ((value < 1) || (value > 9))) {   // ...
-        fmt::print("Invalid Input: Values can range from 1 - 9");
+    if ((!(std::cin >> value)) || ((value < 1) || (value > 9))) {   // ...
+        fmt::print("Invalid Input: Values can range from 1 - 9\n");
         return;
     }
 
