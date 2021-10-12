@@ -104,9 +104,9 @@ void Game::runMainMenu()
     uint16_t inputVal { 0 };
     std::cin >> inputVal;
     if ((inputVal < static_cast<uint16_t>(Game::MainMenuChoice::startNewGame)) || (inputVal > static_cast<uint16_t>(Game::MainMenuChoice::exitTerminalSudoku))) {
+        fmt::print("Invalid Choice, please try again!\n");
         Game::flushStdin();
         Game::runMainMenu();
-        fmt::print("Invalid Choice, please try again!\n");
     }
     Game::MainMenuChoice usrChoice = static_cast<Game::MainMenuChoice>(inputVal);
     switch (usrChoice) {
