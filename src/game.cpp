@@ -91,6 +91,7 @@ void Game::displayLogo()
 enum class Game::MainMenuChoice {
     invalid = 0,
     startNewGame,
+    loadGame,
     // ...
     // insert new options above
     exitTerminalSudoku
@@ -112,13 +113,16 @@ void Game::runMainMenu()
 {
     Game::displayLogo();
     fmt::print(
-        "Please select action:\n1 - Start a new Game\n2 - Exit Terminal "
+        "Please select action:\n1 - Start a new Game\n2 - Load Game\n3 - Exit Terminal "
         "SuDoKu\n:");
     Game::MainMenuChoice usrChoice = Game::getMainMenuChoice();
     switch (usrChoice) {
     case Game::MainMenuChoice::startNewGame:
         Game::startGameLoop();
         break;
+    case Game::MainMenuChoice::loadGame:
+        // not implemented yet
+        return;
     case Game::MainMenuChoice::exitTerminalSudoku:
         return;
     case Game::MainMenuChoice::invalid:
@@ -180,11 +184,11 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
 
     case Game::PlayMenuChoice::autoSolve:
         Game::tryRecSolve();
-        return Game::PlayMenuChoice::autoSolve;
+        return usrChoice;
 
     case Game::PlayMenuChoice::startNewGame:
         Game::setUpNewGame(Game::getDifficultyFromPlayer());
-        return Game::PlayMenuChoice::startNewGame;
+        return usrChoice;
 
     case Game::PlayMenuChoice::saveGame:
         Game::saveCurrentGame();
@@ -197,9 +201,6 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
         return Game::PlayMenuChoice::invalid;
         ;
     }
-
-    // to do
-    // implement main logic of game (counter, memory, set, restart, solve)
 }
 
 void Game::handleUserCellEntry() // make bulletproof
