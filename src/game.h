@@ -32,9 +32,8 @@ private:
     void printGameState() const;
     Game::PlayMenuChoice runPlayMenu();
     void tryRecSolve();
-    // bool isSolvable() const;
     void setUpNewGame(Game::Difficulty difficulty);
-    // void finishGame();
+    void finishGame();
     static Game::Difficulty getDifficultyFromPlayer();
     static void startGameLoop();
     static enum Game::MainMenuChoice getMainMenuChoice();
@@ -42,6 +41,9 @@ private:
     void handleUserCellEntry();
     static void flushStdin();
     void reverseLastMove();
+    // load / safe
+    bool loadSavedGame();
+    void saveCurrentGame() const;
 };
 
 #endif

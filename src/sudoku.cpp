@@ -2,10 +2,14 @@
 #include "sudoku.h"
 #include <algorithm>
 #include <chrono>
+#include <ctime>
 #include <exception>
 #include <fmt/core.h>
+#include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 
 // constructors & destructors
 // --------------------------
@@ -199,4 +203,34 @@ bool Sudoku::isSolved() const
         }
     }
     return (sum == Sudoku::checkSum);
+}
+
+// read and safe
+
+void Sudoku::writeToFile() const
+{
+    // construct a timestamped filename
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%%d.%m.%Y-H:%M:%S.txt");
+    std::string path { "boards/" + oss.str() };
+
+    std::ofstream file;
+    file.open(path);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error while trying to open File: " + path + "\n");
+    }
+    for (const auto& row : board) {
+        for (const auto& cell : row) {
+            file << cell;
+        }
+        file << '\n';
+    }
+}
+
+void Sudoku::setFromFile(const std::string& filename)
+{
+    fmt::print("Feature not implemented yet\nDidnt load {}\n", filename);
+    return;
 }

@@ -4,6 +4,7 @@
 #include <array>
 #include <cstdint>
 #include <random>
+#include <string>
 class Sudoku {
 public:
     Sudoku();
@@ -18,6 +19,9 @@ public:
     bool isSolved() const;
     bool solve();
     void resetSudoku();
+    // load / save board
+    void writeToFile() const;
+    void setFromFile(const std::string& filename);
 
 private:
     std::array<std::array<uint16_t, 9>, 9> board;

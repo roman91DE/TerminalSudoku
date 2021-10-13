@@ -22,6 +22,16 @@ Game::Difficulty Game::getDifficultyFromPlayer()
     return static_cast<Game::Difficulty>(usrInput);
 }
 
+struct Game::Move {
+    uint16_t row, col, val;
+    Move(uint16_t _row, uint16_t _col, uint16_t _val)
+        : row(_row)
+        , col(_col)
+        , val(_val)
+    {
+    }
+};
+
 Game::Game(Game::Difficulty difficulty)
 
     : sudokuPtr(std::make_unique<Sudoku>(Sudoku()))
@@ -129,7 +139,9 @@ enum class Game::PlayMenuChoice {
     invalid = 0,
     enterValue,
     reverseLast,
+    autoSolve,
     startNewGame,
+    saveGame,
     // ...
     // insert new options above
     toMainMenu,
@@ -137,8 +149,7 @@ enum class Game::PlayMenuChoice {
 
 void Game::startGameLoop()
 {
-    Game::Difficulty difficulty = Game::getDifficultyFromPlayer();
-    Game game = Game(difficulty);
+    Game game = Game(Game::getDifficultyFromPlayer());
     Game::PlayMenuChoice usersLastChoice { Game::PlayMenuChoice::invalid };
     while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
         usersLastChoice = game.runPlayMenu();
@@ -161,13 +172,13 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
 {
     // display
     printGameState();
-    fmt::print("1 - Enter Value\n2 - Reverse last\n3 - Start new Game\n");
+    fmt::print("1 - Enter Value\n2 - Reverse last\n3 - Start new Game\n4 - Save current Game\n");
     fmt::print("Select action\n:");
 
     Game::PlayMenuChoice usrChoice = Game::getPlayMenuChoice();
 
     switch (usrChoice) {
-        // implements the interactive play menu
+        // interactive play menu
     case Game::PlayMenuChoice::enterValue:
         Game::handleUserCellEntry();
         return usrChoice;
@@ -175,9 +186,18 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
     case Game::PlayMenuChoice::reverseLast:
         Game::reverseLastMove();
         return usrChoice;
+    
+    case Game::PlayMenuChoice::autoSolve:
+
+
+    case Game::PlayMenuChoice::saveGame:
+        Game::saveCurrentGame();
+        return usrChoice;
 
     case Game::PlayMenuChoice::toMainMenu:
         return usrChoice;
+
+    
 
     default:
         return Game::PlayMenuChoice::invalid;
@@ -188,15 +208,7 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
     // implement main logic of game (counter, memory, set, restart, solve)
 }
 
-struct Game::Move {
-    uint16_t row, col, val;
-    Move(uint16_t _row, uint16_t _col, uint16_t _val)
-        : row(_row)
-        , col(_col)
-        , val(_val)
-    {
-    }
-};
+
 
 void Game::handleUserCellEntry() // make bulletproof
 {
@@ -225,6 +237,7 @@ void Game::handleUserCellEntry() // make bulletproof
     }
 }
 
+
 void Game::reverseLastMove()
 {
     if (moveMemory.empty()) {
@@ -234,3 +247,19 @@ void Game::reverseLastMove()
         moveMemory.pop_back();
     }
 }
+
+
+void Game::finishGame() {
+
+}
+
+void Game::saveCurrentGame() const
+{
+    try {
+        sudokuPtr->writeToFile();
+        fmt::print("Current Board has been successfully written to file\n");
+    } catch (const std::runtime_error& err) {
+        std::cerr << "Error occured: " << err.what() << "\nGame could not be saved!";
+    }
+}
+

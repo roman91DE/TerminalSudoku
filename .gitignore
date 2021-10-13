@@ -4,3 +4,4 @@ CMakeFiles/
 test.cpp
 test
 *.ipynb
+boards/*.txt

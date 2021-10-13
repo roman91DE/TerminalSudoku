@@ -16,6 +16,7 @@ add_compile_options(
 include_directories(
   src
   media
+  boards
 )
 
 add_executable(
