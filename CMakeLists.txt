@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.0.0)
 project(TerminalSuDoKu VERSION 1.0)
 
 add_compile_options(
-  # use c++17 
   -std=c++17
   # set compiler warnings to maximum
   -Wall
@@ -16,6 +15,7 @@ add_compile_options(
 
 include_directories(
   src
+  media
 )
 
 add_executable(

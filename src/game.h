@@ -11,7 +11,6 @@ class Game {
 public:
     static void runMainMenu();
 
-    // helper constructs
 private:
     struct Move;
 
@@ -43,7 +42,6 @@ private:
     void handleUserCellEntry();
     static void flushStdin();
     void reverseLastMove();
-
 };
 
 #endif

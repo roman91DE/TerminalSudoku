@@ -1,12 +1,14 @@
 
 #include "sudoku.h"
-
-#include <fmt/core.h>
-
 #include <algorithm>
+#include <chrono>
 #include <exception>
+#include <fmt/core.h>
 #include <iostream>
 #include <iterator>
+
+// constructors & destructors
+// --------------------------
 
 Sudoku::Sudoku()
 {
@@ -26,6 +28,9 @@ void Sudoku::resetSudoku()
     for (auto& row : board)
         std::fill(row.begin(), row.end(), 0);
 }
+
+// console output
+// --------------
 
 void Sudoku::printLine() { fmt::print(" +-----------+\n"); }
 
@@ -57,6 +62,9 @@ void Sudoku::printSudoku() const
     Sudoku::printLine();
     fmt::print("\n");
 }
+
+// basic methods
+// -------------
 
 void Sudoku::setCell(uint16_t val, uint16_t row, uint16_t col)
 {
@@ -96,6 +104,14 @@ bool Sudoku::isPossible(uint16_t val, uint16_t row, uint16_t col) const
     return true;
 }
 
+// randomized methods
+// ------------------
+
+void Sudoku::seedRandomEngine()
+{
+    Sudoku::generator.seed(static_cast<long unsigned int>(time(0)));
+}
+
 void Sudoku::randSet()
 {
     for (uint64_t counter { 0 }; counter < Sudoku::safetyLimit; ++counter) {
@@ -121,16 +137,29 @@ void Sudoku::randClear()
     }
 }
 
-bool Sudoku::isSolved() const
+void Sudoku::randomInit(uint16_t numCells)
 {
-    uint32_t sum { 0 };
-    for (const auto& row : board) {
-        for (const auto& col : row) {
-            sum += col;
-        }
+    // fills the board with numCells random values - checks that result is solvable
+
+    for (uint16_t counter { 0 }; counter < Sudoku::initSeed; ++counter)
+        randSet();
+    // solve sudoku
+    solve();
+    // safety check: sudoku must be solvable
+    if (!isSolved()) {
+        std::cerr
+            << "Backtracking failed at solving the current Sudoku!\nRepeating "
+               "randomization...\n";
+        resetSudoku();
+        randomInit(numCells);
     }
-    return (sum == Sudoku::checkSum);
+    // delete random cells until numCells are left
+    for (uint16_t counter { 9 * 9 }; counter > numCells; --counter)
+        randClear();
 }
+
+// solving methods
+// ---------------
 
 bool Sudoku::solve()
 {
@@ -161,22 +190,13 @@ void Sudoku::recursiveSolve()
     throw Sudoku::stopRecursion();
 }
 
-void Sudoku::randomInit(uint16_t numCells)
+bool Sudoku::isSolved() const
 {
-    // fill sudoku with n random values (n = Sudoku::initSeed)
-    for (uint16_t counter { 0 }; counter < Sudoku::initSeed; ++counter)
-        randSet();
-    // solve sudoku
-    solve();
-    // safety check: sudoku must be solvable
-    if (!isSolved()) {
-        std::cerr
-            << "Backtracking failed at solving the current Sudoku!\nRepeating "
-               "randomization...\n";
-        resetSudoku();
-        randomInit(numCells);
+    uint32_t sum { 0 };
+    for (const auto& row : board) {
+        for (const auto& col : row) {
+            sum += col;
+        }
     }
-    // delete random cells until numCells are left
-    for (uint16_t counter { 9 * 9 }; counter > numCells; --counter)
-        randClear();
+    return (sum == Sudoku::checkSum);
 }

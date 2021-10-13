@@ -1,5 +1,4 @@
 #include "game.h"
-
 #include <fmt/core.h>
 #include <fstream>
 #include <iostream>
@@ -55,8 +54,6 @@ void Game::flushStdin()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-
-
 void Game::setUpNewGame(Game::Difficulty difficulty)
 {
     moveMemory.clear();
@@ -68,11 +65,11 @@ uint16_t Game::getNumCells(Game::Difficulty difficulty)
 {
     switch (difficulty) {
     case Game::Difficulty::easy:
-        return 20;
+        return 25;
     case Game::Difficulty::medium:
         return 30;
     case Game::Difficulty::hard:
-        return 40;
+        return 35;
     default:
         return 0;
     }
@@ -82,7 +79,7 @@ void Game::displayLogo()
 {
     std::ifstream ifs;
     std::string buffer;
-    ifs.open("/Users/rmn/code/c/sudoku/src/logo.txt"); // change to relative path
+    ifs.open("media/logo.txt"); // change to relative path
     if (ifs.is_open()) {
         while (getline(ifs, buffer)) {
             fmt::print("{}\n", buffer);
@@ -142,14 +139,11 @@ void Game::startGameLoop()
 {
     Game::Difficulty difficulty = Game::getDifficultyFromPlayer();
     Game game = Game(difficulty);
-    Game::PlayMenuChoice usersLastChoice { Game::PlayMenuChoice::invalid};
+    Game::PlayMenuChoice usersLastChoice { Game::PlayMenuChoice::invalid };
     while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
         usersLastChoice = game.runPlayMenu();
     }
 }
-
-
-
 
 enum Game::PlayMenuChoice Game::getPlayMenuChoice()
 { // read from stdin, loops until a valid input for playMenu is entered
@@ -163,7 +157,6 @@ enum Game::PlayMenuChoice Game::getPlayMenuChoice()
     return static_cast<Game::PlayMenuChoice>(inputVal);
 }
 
-
 Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
 {
     // display
@@ -174,14 +167,14 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
     Game::PlayMenuChoice usrChoice = Game::getPlayMenuChoice();
 
     switch (usrChoice) {
-      // implements the interactive play menu
+        // implements the interactive play menu
     case Game::PlayMenuChoice::enterValue:
         Game::handleUserCellEntry();
         return usrChoice;
-    
+
     case Game::PlayMenuChoice::reverseLast:
-          Game::reverseLastMove();
-          return usrChoice;
+        Game::reverseLastMove();
+        return usrChoice;
 
     case Game::PlayMenuChoice::toMainMenu:
         return usrChoice;
@@ -232,16 +225,12 @@ void Game::handleUserCellEntry() // make bulletproof
     }
 }
 
-void Game::reverseLastMove() {
-  if (moveMemory.empty()) {
-    fmt::print("No more moves to reverse!\n");
-    return;
-  }
-  uint16_t row, col, value;
-  row = moveMemory[moveMemory.size()-1].row;
-  col = moveMemory[moveMemory.size()-1].col;
-  value = moveMemory[moveMemory.size()-1].val;
-  moveMemory.pop_back();
-
-
+void Game::reverseLastMove()
+{
+    if (moveMemory.empty()) {
+        fmt::print("No more moves to reverse!\n");
+    } else {
+        sudokuPtr->clearCell(moveMemory[moveMemory.size() - 1].row, moveMemory[moveMemory.size() - 1].col);
+        moveMemory.pop_back();
+    }
 }
