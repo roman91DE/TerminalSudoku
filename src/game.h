@@ -33,7 +33,6 @@ private:
     Game::PlayMenuChoice runPlayMenu();
     void tryRecSolve();
     void setUpNewGame(Game::Difficulty difficulty);
-    void finishGame();
     static Game::Difficulty getDifficultyFromPlayer();
     static void startGameLoop();
     static enum Game::MainMenuChoice getMainMenuChoice();

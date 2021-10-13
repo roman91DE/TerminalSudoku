@@ -49,15 +49,6 @@ void Game::printGameState() const
     sudokuPtr->printSudoku();
 }
 
-void Game::tryRecSolve()
-{
-    if (sudokuPtr->solve()) {
-        sudokuPtr->printSudoku();
-    } else {
-        fmt::print("The game can not be solved in it's current state!\n");
-    }
-}
-
 void Game::flushStdin()
 {
     std::cin.clear();
@@ -172,7 +163,7 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
 {
     // display
     printGameState();
-    fmt::print("1 - Enter Value\n2 - Reverse last\n3 - Start new Game\n4 - Save current Game\n");
+    fmt::print("1 - Enter Value\n2 - Reverse last\n3 - Show Solution (finishes current game)\n4 - Start new Game\n5 - Save current Game\n6 - Back to main Menu\n");
     fmt::print("Select action\n:");
 
     Game::PlayMenuChoice usrChoice = Game::getPlayMenuChoice();
@@ -186,9 +177,14 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
     case Game::PlayMenuChoice::reverseLast:
         Game::reverseLastMove();
         return usrChoice;
-    
-    case Game::PlayMenuChoice::autoSolve:
 
+    case Game::PlayMenuChoice::autoSolve:
+        Game::tryRecSolve();
+        return Game::PlayMenuChoice::autoSolve;
+
+    case Game::PlayMenuChoice::startNewGame:
+        Game::setUpNewGame(Game::getDifficultyFromPlayer());
+        return Game::PlayMenuChoice::startNewGame;
 
     case Game::PlayMenuChoice::saveGame:
         Game::saveCurrentGame();
@@ -196,8 +192,6 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
 
     case Game::PlayMenuChoice::toMainMenu:
         return usrChoice;
-
-    
 
     default:
         return Game::PlayMenuChoice::invalid;
@@ -207,8 +201,6 @@ Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and get
     // to do
     // implement main logic of game (counter, memory, set, restart, solve)
 }
-
-
 
 void Game::handleUserCellEntry() // make bulletproof
 {
@@ -237,7 +229,6 @@ void Game::handleUserCellEntry() // make bulletproof
     }
 }
 
-
 void Game::reverseLastMove()
 {
     if (moveMemory.empty()) {
@@ -248,9 +239,14 @@ void Game::reverseLastMove()
     }
 }
 
-
-void Game::finishGame() {
-
+void Game::tryRecSolve()
+{
+    if (sudokuPtr->solve()) {
+        fmt::print("Found this possible Solution to the current Board: \n");
+        sudokuPtr->printSudoku();
+    } else {
+        fmt::print("Board is unsolvable in its current state!\n");
+    }
 }
 
 void Game::saveCurrentGame() const
@@ -262,4 +258,3 @@ void Game::saveCurrentGame() const
         std::cerr << "Error occured: " << err.what() << "\nGame could not be saved!";
     }
 }
-

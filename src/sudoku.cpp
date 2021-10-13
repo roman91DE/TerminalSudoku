@@ -155,7 +155,7 @@ void Sudoku::randomInit(uint16_t numCells)
             << "Backtracking failed at solving the current Sudoku!\nRepeating "
                "randomization...\n";
         resetSudoku();
-        randomInit(numCells);
+        return randomInit(numCells);      // check this: solve / init didnt work properly
     }
     // delete random cells until numCells are left
     for (uint16_t counter { 9 * 9 }; counter > numCells; --counter)
