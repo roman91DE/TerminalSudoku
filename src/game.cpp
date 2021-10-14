@@ -4,6 +4,7 @@
 #include <iostream>
 #include <limits>
 
+
 enum class Game::Difficulty { easy = 1,
     medium = 2,
     hard = 3 };
@@ -80,7 +81,7 @@ void Game::displayLogo()
 {
     std::ifstream ifs;
     std::string buffer;
-    ifs.open("media/logo.txt"); // change to relative path
+    ifs.open("media/logo.txt");
     if (ifs.is_open()) {
         while (getline(ifs, buffer)) {
             fmt::print("{}\n", buffer);
@@ -97,8 +98,9 @@ enum class Game::MainMenuChoice {
     exitTerminalSudoku
 };
 
+// read from stdin, loops until a valid input for mainMenu is entered
 enum Game::MainMenuChoice Game::getMainMenuChoice()
-{ // read from stdin, loops until a valid input for mainMenu is entered
+{ 
     uint16_t inputVal { 0 };
     std::cin >> inputVal;
     if ((inputVal <= static_cast<uint16_t>(Game::MainMenuChoice::invalid)) || (inputVal > static_cast<uint16_t>(Game::MainMenuChoice::exitTerminalSudoku))) {
@@ -109,6 +111,11 @@ enum Game::MainMenuChoice Game::getMainMenuChoice()
     return static_cast<Game::MainMenuChoice>(inputVal);
 }
 
+const std::string Game::getBoardPath()
+{
+    return std::string { "example.txt" };
+}
+
 void Game::runMainMenu()
 {
     Game::displayLogo();
@@ -117,17 +124,21 @@ void Game::runMainMenu()
         "SuDoKu\n:");
     Game::MainMenuChoice usrChoice = Game::getMainMenuChoice();
     switch (usrChoice) {
+
     case Game::MainMenuChoice::startNewGame:
-        Game::startGameLoop();
+        Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{""});
         break;
     case Game::MainMenuChoice::loadGame:
-        // not implemented yet
-        return;
+        Game::startGameLoop(Game::Difficulty::easy, Game::getBoardPath());
+        break;
     case Game::MainMenuChoice::exitTerminalSudoku:
         return;
     case Game::MainMenuChoice::invalid:
         std::cerr << "An error occurred in function runMainMenu() - Shut down current session!\n";
+    default:
+    std::cerr << "An error occurred in function runMainMenu() - Shut down current session!\n";
     }
+
 }
 
 enum class Game::PlayMenuChoice {
@@ -142,9 +153,13 @@ enum class Game::PlayMenuChoice {
     toMainMenu,
 };
 
-void Game::startGameLoop()
+void Game::startGameLoop(Game::Difficulty difficulty, std::string& boardPath)
 {
-    Game game = Game(Game::getDifficultyFromPlayer());
+    Game game = Game(difficulty);
+    if (boardPath != "") {
+        Game game { Game::Difficulty::easy };
+        game.loadSavedGame(boardPath);
+    }
     Game::PlayMenuChoice usersLastChoice { Game::PlayMenuChoice::invalid };
     while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
         usersLastChoice = game.runPlayMenu();
@@ -257,5 +272,18 @@ void Game::saveCurrentGame() const
         fmt::print("Current Board has been successfully written to file\n");
     } catch (const std::runtime_error& err) {
         std::cerr << "Error occured: " << err.what() << "\nGame could not be saved!";
+    }
+}
+
+void Game::loadSavedGame(const std::string path)
+{
+    try {
+        if (sudokuPtr->setFromFile(path)) {
+            fmt::print("Succesfully loaded {}\n", path);
+        } else {
+            fmt::print("The provided file {} is unsolvable!\nStarted new Game instead!\n", path);
+        }
+    } catch (const std::runtime_error& err) {
+        fmt::print("An Error occured: {}\nStarted new Game instead!\n", err.what());
     }
 }

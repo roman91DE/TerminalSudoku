@@ -34,14 +34,15 @@ private:
     void tryRecSolve();
     void setUpNewGame(Game::Difficulty difficulty);
     static Game::Difficulty getDifficultyFromPlayer();
-    static void startGameLoop();
+    static void startGameLoop(Game::Difficulty difficulty, std::string boardPath);
+    static const std::string getBoardPath();
     static enum Game::MainMenuChoice getMainMenuChoice();
     static enum Game::PlayMenuChoice getPlayMenuChoice();
     void handleUserCellEntry();
     static void flushStdin();
     void reverseLastMove();
     // load / safe
-    bool loadSavedGame();
+    void loadSavedGame(const std::string path);
     void saveCurrentGame() const;
 };
 

@@ -18,10 +18,11 @@ public:
     bool isPossible(uint16_t val, uint16_t row, uint16_t col) const;
     bool isSolved() const;
     bool solve();
+    bool isSolvable() const;
     void resetSudoku();
     // load / save board
     void writeToFile() const;
-    void setFromFile(const std::string& filename);
+    bool setFromFile(const std::string& filename);
 
 private:
     std::array<std::array<uint16_t, 9>, 9> board;

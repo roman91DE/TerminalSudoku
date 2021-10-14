@@ -108,6 +108,15 @@ bool Sudoku::isPossible(uint16_t val, uint16_t row, uint16_t col) const
     return true;
 }
 
+bool Sudoku::isSolvable() const
+{
+    Sudoku test = Sudoku(*(this));
+    if (test.solve())
+        return true;
+    else
+        return false;
+}
+
 // randomized methods
 // ------------------
 
@@ -155,7 +164,7 @@ void Sudoku::randomInit(uint16_t numCells)
             << "Backtracking failed at solving the current Sudoku!\nRepeating "
                "randomization...\n";
         resetSudoku();
-        return randomInit(numCells);      // check this: solve / init didnt work properly
+        return randomInit(numCells); // check this: solve / init didnt work properly
     }
     // delete random cells until numCells are left
     for (uint16_t counter { 9 * 9 }; counter > numCells; --counter)
@@ -213,7 +222,7 @@ void Sudoku::writeToFile() const
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
-    oss << std::put_time(&tm, "%%d.%m.%Y-H:%M:%S.txt");
+    oss << std::put_time(&tm, "%d%m%Y%H%M%S.txt");
     std::string path { "boards/" + oss.str() };
 
     std::ofstream file;
@@ -223,14 +232,33 @@ void Sudoku::writeToFile() const
     }
     for (const auto& row : board) {
         for (const auto& cell : row) {
-            file << cell;
+            file << cell << ' ';
         }
         file << '\n';
     }
+    file.close();
 }
 
-void Sudoku::setFromFile(const std::string& filename)
+bool Sudoku::setFromFile(const std::string& filename)
 {
-    fmt::print("Feature not implemented yet\nDidnt load {}\n", filename);
-    return;
+    std::ifstream file;
+    std::string path { "boards/" + filename };
+    file.open(path);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error while trying to read from File: " + path + "\n");
+    }
+    uint16_t buffer;
+    for (uint16_t row { 0 }; row < 9; ++row) {
+        for (uint16_t col { 0 }; col < 9; ++col) {
+            file >> buffer;
+            if (file.bad()) {
+                throw std::runtime_error("Format Error occured while trying to read from File: " + path + "\n");
+            }
+            setCell(buffer, row, col);
+        }
+    }
+    if (!isSolvable()) {
+        return false;
+    }
+    return true;
 }
