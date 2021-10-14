@@ -4,7 +4,6 @@
 #include <iostream>
 #include <limits>
 
-
 enum class Game::Difficulty { easy = 1,
     medium = 2,
     hard = 3 };
@@ -100,7 +99,7 @@ enum class Game::MainMenuChoice {
 
 // read from stdin, loops until a valid input for mainMenu is entered
 enum Game::MainMenuChoice Game::getMainMenuChoice()
-{ 
+{
     uint16_t inputVal { 0 };
     std::cin >> inputVal;
     if ((inputVal <= static_cast<uint16_t>(Game::MainMenuChoice::invalid)) || (inputVal > static_cast<uint16_t>(Game::MainMenuChoice::exitTerminalSudoku))) {
@@ -114,7 +113,7 @@ enum Game::MainMenuChoice Game::getMainMenuChoice()
 // dummy function - needs to get path from stdin prompt
 const std::string Game::getBoardPath()
 {
-    return std::string { "example.txt"};
+    return std::string { "example.txt" };
 }
 
 void Game::runMainMenu()
@@ -127,7 +126,7 @@ void Game::runMainMenu()
     switch (usrChoice) {
 
     case Game::MainMenuChoice::startNewGame:
-        Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
+        Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string {});
         break;
     case Game::MainMenuChoice::loadGame:
         Game::startGameLoop(Game::Difficulty::easy, Game::getBoardPath());
@@ -135,9 +134,8 @@ void Game::runMainMenu()
     case Game::MainMenuChoice::exitTerminalSudoku:
         return;
     default:
-    std::cerr << "An error occurred in function runMainMenu() - Shut down current session!\n";
+        std::cerr << "An error occurred in function runMainMenu() - Shut down current session!\n";
     }
-
 }
 
 enum class Game::PlayMenuChoice {
@@ -155,7 +153,7 @@ enum class Game::PlayMenuChoice {
 void Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 {
     Game game = Game(difficulty);
-    if (!boardPath.size()) {    // if boardPath string not empty, try to read it
+    if (!boardPath.size()) { // if boardPath string not empty, try to read it
         Game game { Game::Difficulty::easy };
         game.loadSavedGame(boardPath);
     }

@@ -8,11 +8,10 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <iterator>
 #include <sstream>
 
 // constructors & destructors
-// --------------------------
+// ----------
 
 Sudoku::Sudoku()
 {
@@ -27,48 +26,8 @@ Sudoku::Sudoku(const Sudoku& sudoku)
 
 Sudoku::~Sudoku() { }
 
-void Sudoku::resetSudoku()
-{
-    for (auto& row : board)
-        std::fill(row.begin(), row.end(), 0);
-}
-
-// console output
-// --------------
-
-void Sudoku::printLine() { fmt::print(" +-----------+\n"); }
-
-void Sudoku::printSudoku() const
-{
-    uint16_t rowCount { 0 }, colCount { 0 }, lineCount { 0 };
-    fmt::print("  123 456 789 \n");
-    Sudoku::printLine();
-
-    for (const auto& row : board) {
-        if ((rowCount++) == 3) {
-            Sudoku::printLine();
-            rowCount = 1;
-        }
-        colCount = 0;
-        fmt::print("{}", ++lineCount);
-        for (const auto& cell : row) {
-            if ((colCount--) == 0) {
-                fmt::print("|");
-                colCount = 2;
-            }
-            if (cell == 0)
-                fmt::print(" ");
-            else
-                fmt::print("{}", cell);
-        }
-        fmt::print("|\n");
-    }
-    Sudoku::printLine();
-    fmt::print("\n");
-}
-
 // basic methods
-// -------------
+// ----------
 
 void Sudoku::setCell(uint16_t val, uint16_t row, uint16_t col)
 {
@@ -108,17 +67,14 @@ bool Sudoku::isPossible(uint16_t val, uint16_t row, uint16_t col) const
     return true;
 }
 
-bool Sudoku::isSolvable() const
+void Sudoku::resetSudoku()
 {
-    Sudoku test = Sudoku(*(this));
-    if (test.solve())
-        return true;
-    else
-        return false;
+    for (auto& row : board)
+        std::fill(row.begin(), row.end(), 0);
 }
 
 // randomized methods
-// ------------------
+// ----------
 
 void Sudoku::seedRandomEngine()
 {
@@ -150,9 +106,9 @@ void Sudoku::randClear()
     }
 }
 
+// fills the board with numCells random values - checks that result is solvable
 void Sudoku::randomInit(uint16_t numCells)
 {
-    // fills the board with numCells random values - checks that result is solvable
 
     for (uint16_t counter { 0 }; counter < Sudoku::initSeed; ++counter)
         randSet();
@@ -172,7 +128,7 @@ void Sudoku::randomInit(uint16_t numCells)
 }
 
 // solving methods
-// ---------------
+// ----------
 
 bool Sudoku::solve()
 {
@@ -214,7 +170,48 @@ bool Sudoku::isSolved() const
     return (sum == Sudoku::checkSum);
 }
 
-// read and safe
+bool Sudoku::isSolvable() const
+{
+    Sudoku test = Sudoku(*(this));
+    if (test.solve())
+        return true;
+    else
+        return false;
+}
+
+// I/O
+// ----------
+
+void Sudoku::printLine() { fmt::print(" +-----------+\n"); }
+
+void Sudoku::printSudoku() const
+{
+    uint16_t rowCount { 0 }, colCount { 0 }, lineCount { 0 };
+    fmt::print("  123 456 789 \n");
+    Sudoku::printLine();
+
+    for (const auto& row : board) {
+        if ((rowCount++) == 3) {
+            Sudoku::printLine();
+            rowCount = 1;
+        }
+        colCount = 0;
+        fmt::print("{}", ++lineCount);
+        for (const auto& cell : row) {
+            if ((colCount--) == 0) {
+                fmt::print("|");
+                colCount = 2;
+            }
+            if (cell == 0)
+                fmt::print(" ");
+            else
+                fmt::print("{}", cell);
+        }
+        fmt::print("|\n");
+    }
+    Sudoku::printLine();
+    fmt::print("\n");
+}
 
 void Sudoku::writeToFile() const
 {
