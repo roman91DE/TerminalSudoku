@@ -111,9 +111,10 @@ enum Game::MainMenuChoice Game::getMainMenuChoice()
     return static_cast<Game::MainMenuChoice>(inputVal);
 }
 
+// dummy function - needs to get path from stdin prompt
 const std::string Game::getBoardPath()
 {
-    return std::string { "example.txt" };
+    return std::string { "example.txt"};
 }
 
 void Game::runMainMenu()
@@ -126,15 +127,13 @@ void Game::runMainMenu()
     switch (usrChoice) {
 
     case Game::MainMenuChoice::startNewGame:
-        Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{""});
+        Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
         break;
     case Game::MainMenuChoice::loadGame:
         Game::startGameLoop(Game::Difficulty::easy, Game::getBoardPath());
         break;
     case Game::MainMenuChoice::exitTerminalSudoku:
         return;
-    case Game::MainMenuChoice::invalid:
-        std::cerr << "An error occurred in function runMainMenu() - Shut down current session!\n";
     default:
     std::cerr << "An error occurred in function runMainMenu() - Shut down current session!\n";
     }
@@ -153,10 +152,10 @@ enum class Game::PlayMenuChoice {
     toMainMenu,
 };
 
-void Game::startGameLoop(Game::Difficulty difficulty, std::string& boardPath)
+void Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 {
     Game game = Game(difficulty);
-    if (boardPath != "") {
+    if (!boardPath.size()) {    // if boardPath string not empty, try to read it
         Game game { Game::Difficulty::easy };
         game.loadSavedGame(boardPath);
     }
