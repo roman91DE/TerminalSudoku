@@ -161,6 +161,7 @@ void Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
     while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
         usersLastChoice = game.runPlayMenu();
     }
+    game.runMainMenu();
 }
 
 enum Game::PlayMenuChoice Game::getPlayMenuChoice()
