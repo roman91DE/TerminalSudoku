@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 project(TerminalSuDoKu VERSION 1.0)
 
 add_compile_options(
-  -std=c++17
+  #-std=c++17       # macOS
+  -std=gnu++17      # ubuntu
   # set compiler warnings to maximum
   -Wall
   -Wextra

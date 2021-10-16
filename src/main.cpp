@@ -1,7 +1,8 @@
 #include "game.h"
 
-int main()
+int
+main()
 {
-    Game::runMainMenu();
-    return 0;
+  Game::runMainMenu();
+  return 0;
 }
