@@ -172,7 +172,7 @@ void
 Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 {
   Game game = Game(difficulty);
-  if (boardPath.size()) { // if boardPath string not empty, try to read it
+  if (boardPath.size() > 0) { // if boardPath string not empty, try to read it
     Game game{ Game::Difficulty::easy };
     game.loadSavedGame(boardPath);
   }
