@@ -126,8 +126,7 @@ Sudoku::randomInit(uint16_t numCells)
   // safety check: sudoku must be solvable
   if (!isSolved()) {
     std::cerr
-      << "Backtracking failed at solving the current Sudoku!\nRepeating "
-         "randomization...\n";
+      << "...searching for a new board...\n";
     resetSudoku();
     return randomInit(numCells); // check this: solve / init didnt work properly
   }

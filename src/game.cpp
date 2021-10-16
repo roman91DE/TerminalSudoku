@@ -6,6 +6,7 @@
 
 enum class Game::Difficulty
 {
+  empty = 0,
   easy = 1,
   medium = 2,
   hard = 3
@@ -74,14 +75,16 @@ uint16_t
 Game::getNumCells(Game::Difficulty difficulty)
 {
   switch (difficulty) {
-    case Game::Difficulty::easy:
-      return 25;
-    case Game::Difficulty::medium:
-      return 30;
-    case Game::Difficulty::hard:
-      return 35;
-    default:
+    case Game::Difficulty::empty:
       return 0;
+    case Game::Difficulty::easy:
+      return 8;
+    case Game::Difficulty::medium:
+      return 12;
+    case Game::Difficulty::hard:
+      return 16;
+    default:
+      return 8; 
   }
 }
 
@@ -145,7 +148,7 @@ Game::runMainMenu()
       Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
       break;
     case Game::MainMenuChoice::loadGame:
-      Game::startGameLoop(Game::Difficulty::easy, Game::getBoardPath());
+      Game::startGameLoop(Game::Difficulty::empty, Game::getBoardPath());
       break;
     case Game::MainMenuChoice::exitTerminalSudoku:
       return;
@@ -173,7 +176,7 @@ Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 {
   Game game = Game(difficulty);
   if (boardPath.size() > 0) { // if boardPath string not empty, try to read it
-    Game game{ Game::Difficulty::easy };
+    // Game game{ Game::Difficulty::easy };   ->  Bug???
     game.loadSavedGame(boardPath);
   }
   Game::PlayMenuChoice usersLastChoice{ Game::PlayMenuChoice::invalid };
