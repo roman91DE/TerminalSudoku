@@ -275,16 +275,8 @@ Sudoku::setFromFile(const std::string& filename)
       }
       setCell(buffer, row, col);
     }
-<<<<<<< HEAD
     if (!isSolvable()) {
         return false;
     }
     return true;
-=======
-  }
-  if (!isSolvable()) {
-    return false;
-  }
-  return true;
->>>>>>> cd537f4a6cd2d3aa0f7c8c9827da8aa705e67ecd
 }

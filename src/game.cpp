@@ -127,14 +127,8 @@ Game::getMainMenuChoice()
   return static_cast<Game::MainMenuChoice>(inputVal);
 }
 
-<<<<<<< HEAD
 // dummy function - needs to get path from console prompt
 const std::string Game::getBoardPath()
-=======
-// dummy function - needs to get path from stdin prompt
-const std::string
-Game::getBoardPath()
->>>>>>> cd537f4a6cd2d3aa0f7c8c9827da8aa705e67ecd
 {
   return std::string{ "example.txt" };
 }
@@ -297,21 +291,12 @@ Game::reverseLastMove()
 void
 Game::tryRecSolve()
 {
-<<<<<<< HEAD
     if (sudokuPtr->solve()) {
         fmt::print("Found a possible Solution to the current Board: \n");
         sudokuPtr->printSudoku();
     } else {
         fmt::print("Board is unsolvable in its current state!\n");
     }
-=======
-  if (sudokuPtr->solve()) {
-    fmt::print("Found this possible Solution to the current Board: \n");
-    sudokuPtr->printSudoku();
-  } else {
-    fmt::print("Board is unsolvable in its current state!\n");
-  }
->>>>>>> cd537f4a6cd2d3aa0f7c8c9827da8aa705e67ecd
 }
 
 void
