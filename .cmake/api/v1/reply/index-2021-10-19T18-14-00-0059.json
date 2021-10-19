@@ -3,30 +3,40 @@
 	{
 		"generator" : 
 		{
+			"multiConfig" : false,
 			"name" : "Unix Makefiles"
 		},
 		"paths" : 
 		{
-			"cmake" : "/usr/bin/cmake",
-			"cpack" : "/usr/bin/cpack",
-			"ctest" : "/usr/bin/ctest",
-			"root" : "/usr/share/cmake-3.16"
+			"cmake" : "/opt/homebrew/Cellar/cmake/3.21.2/bin/cmake",
+			"cpack" : "/opt/homebrew/Cellar/cmake/3.21.2/bin/cpack",
+			"ctest" : "/opt/homebrew/Cellar/cmake/3.21.2/bin/ctest",
+			"root" : "/opt/homebrew/Cellar/cmake/3.21.2/share/cmake"
 		},
 		"version" : 
 		{
 			"isDirty" : false,
 			"major" : 3,
-			"minor" : 16,
-			"patch" : 3,
-			"string" : "3.16.3",
+			"minor" : 21,
+			"patch" : 2,
+			"string" : "3.21.2",
 			"suffix" : ""
 		}
 	},
 	"objects" : 
 	[
 		{
-			"jsonFile" : "codemodel-v2-1707bf363628fa5a3535.json",
+			"jsonFile" : "codemodel-v2-3f14e89c361d550ab9f1.json",
 			"kind" : "codemodel",
+			"version" : 
+			{
+				"major" : 2,
+				"minor" : 3
+			}
+		},
+		{
+			"jsonFile" : "cache-v2-f8217655ac60a30eaae0.json",
+			"kind" : "cache",
 			"version" : 
 			{
 				"major" : 2,
@@ -34,11 +44,11 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-8b64f2026a1421ac7ce9.json",
-			"kind" : "cache",
+			"jsonFile" : "toolchains-v1-8d896842981ecbd4389a.json",
+			"kind" : "toolchains",
 			"version" : 
 			{
-				"major" : 2,
+				"major" : 1,
 				"minor" : 0
 			}
 		}
@@ -67,7 +77,7 @@
 				"responses" : 
 				[
 					{
-						"jsonFile" : "cache-v2-8b64f2026a1421ac7ce9.json",
+						"jsonFile" : "cache-v2-f8217655ac60a30eaae0.json",
 						"kind" : "cache",
 						"version" : 
 						{
@@ -76,16 +86,22 @@
 						}
 					},
 					{
-						"jsonFile" : "codemodel-v2-1707bf363628fa5a3535.json",
+						"jsonFile" : "codemodel-v2-3f14e89c361d550ab9f1.json",
 						"kind" : "codemodel",
 						"version" : 
 						{
 							"major" : 2,
-							"minor" : 0
+							"minor" : 3
 						}
 					},
 					{
-						"error" : "unknown request kind 'toolchains'"
+						"jsonFile" : "toolchains-v1-8d896842981ecbd4389a.json",
+						"kind" : "toolchains",
+						"version" : 
+						{
+							"major" : 1,
+							"minor" : 0
+						}
 					}
 				]
 			}

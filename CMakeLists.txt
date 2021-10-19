@@ -37,6 +37,7 @@ add_executable(
 
 # locate& link external library (fmt)
 find_package(fmt)
+
 target_link_libraries(
   TerminalSuDoKu fmt::fmt
 )

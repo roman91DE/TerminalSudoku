@@ -27,13 +27,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 33,
+				"line" : 31,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 43,
+				"line" : 41,
 				"parent" : 0
 			},
 			{
@@ -45,7 +45,7 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 27,
+				"line" : 25,
 				"parent" : 0
 			}
 		]
@@ -56,7 +56,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g  "
+					"fragment" : "-g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk"
 				},
 				{
 					"backtrace" : 3,
@@ -88,21 +88,30 @@
 				{
 					"backtrace" : 2,
 					"define" : "FMT_LOCALE"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "FMT_SHARED"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 4,
-					"path" : "/home/roman/projects/cpp/TerminalSudoku/src"
+					"path" : "/Users/rmn/code/c++/sudoku/src"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/roman/projects/cpp/TerminalSudoku/media"
+					"path" : "/Users/rmn/code/c++/sudoku/media"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/roman/projects/cpp/TerminalSudoku/boards"
+					"path" : "/Users/rmn/code/c++/sudoku/boards"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/include"
 				}
 			],
 			"language" : "CXX",
@@ -124,12 +133,16 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-rdynamic",
+				"fragment" : "",
 				"role" : "flags"
 			},
 			{
+				"fragment" : "-Wl,-rpath,/opt/homebrew/lib",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 2,
-				"fragment" : "/usr/lib/x86_64-linux-gnu/libfmt.a",
+				"fragment" : "/opt/homebrew/lib/libfmt.8.0.1.dylib",
 				"role" : "libraries"
 			}
 		],
