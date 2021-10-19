@@ -180,15 +180,15 @@ Game::runMainMenu()
       Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
       break;
     case Game::MainMenuChoice::loadGame:
-    try {
-      Game::Game::startGameLoop(Game::Difficulty::empty, Game::getGamePath());
-      break;
-    } catch (const std::runtime_error &err) {
-      fmt::print("Error - {}", err.what());
-      Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
-      break;
-    }
-      
+      try {
+        Game::Game::startGameLoop(Game::Difficulty::empty, Game::getGamePath());
+        break;
+      } catch (const std::runtime_error& err) {
+        fmt::print("Error - {}", err.what());
+        Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
+        break;
+      }
+
       break;
     case Game::MainMenuChoice::exitTerminalSudoku:
       return;
