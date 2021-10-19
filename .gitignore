@@ -1,21 +1,24 @@
+# cmake/ make build files
 build/
 CMakeFiles/
-.ipynb*/
-test.cpp
-test
-*.ipynb
-.vscode/
 .cmake/**
-
 cmake_install.cmake
 CMakeCache.txt
 compile_commands.json
 CPackConfig.cmake
 CPackSourceConfig.cmake
 Makefile
+
+# python notebooks
+*.ipynb
+
+# vscode settings
+.vscode/
+
+
+#binaries
 TerminalSuDoKu
-.cmake/api/v1/query/client-vscode/query.json
-.cmake/api/v1/reply/cache-v2-8b64f2026a1421ac7ce9.json
-.cmake/api/v1/reply/codemodel-v2-10770ceafed21448d120.json
-.cmake/api/v1/reply/index-2021-10-16T20-14-41-0242.json
-.cmake/api/v1/reply/target-TerminalSuDoKu-Debug-eced5071fdccb6b0d5b9.json
+*.out
+
+# saved games
+boards/*
