@@ -1,8 +1,10 @@
 #include "game.h"
+#include <filesystem>
 #include <fmt/core.h>
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <string>
 
 enum class Game::Difficulty
 {
@@ -11,7 +13,6 @@ enum class Game::Difficulty
   medium = 2,
   hard = 3
 };
-
 
 Game::Difficulty
 Game::getDifficultyFromPlayer()
@@ -128,11 +129,41 @@ Game::getMainMenuChoice()
   return static_cast<Game::MainMenuChoice>(inputVal);
 }
 
-// dummy function - needs to get path from console prompt
-const std::string
-Game::getBoardPath()
+void
+Game::listSavedGames()
 {
-  return std::string{ "example.txt" };
+  uint32_t idx{ 0 };
+  std::string path{ "boards" };
+  for (const auto& entry : std::filesystem::directory_iterator(path))
+    fmt::print("{}. - {}\n", ++idx, entry.path().string());
+}
+
+std::string
+Game::getGamePath()
+{
+  fmt::print("Saved games:\n");
+  Game::listSavedGames();
+  fmt::print("Load game number = ");
+
+  uint16_t usrChoice{ 0 };
+  std::cin >> usrChoice;
+  uint32_t idx{ 0 };
+
+  std::string path = "boards";
+  for (const auto& entry : std::filesystem::directory_iterator(path)) {
+    if ((++idx) == usrChoice) {
+      return entry.path().string();
+    }
+  }
+  if (!idx) {
+    throw std::runtime_error("No saved games - Starting new game!\n");
+  }
+  fmt::print("Invalid Choice - Pick a number between {} and {} to select an "
+             "existing game!\n",
+             1,
+             idx);
+  Game::flushStdin();
+  return Game::getGamePath();
 }
 
 void
@@ -149,7 +180,15 @@ Game::runMainMenu()
       Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
       break;
     case Game::MainMenuChoice::loadGame:
-      Game::startGameLoop(Game::Difficulty::empty, Game::getBoardPath());
+    try {
+      Game::Game::startGameLoop(Game::Difficulty::empty, Game::getGamePath());
+      break;
+    } catch (const std::runtime_error &err) {
+      fmt::print("Error - {}", err.what());
+      Game::startGameLoop(Game::getDifficultyFromPlayer(), std::string{});
+      break;
+    }
+      
       break;
     case Game::MainMenuChoice::exitTerminalSudoku:
       return;
@@ -247,16 +286,17 @@ Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
 void
 Game::handleUserCellEntry() // make bulletproof
 {
-  uint16_t row{ 0 }, col{ 0 }, value{ 0 };
+  uint16_t rowUsr{ 0 }, colUsr{ 0 }, value{ 0 };
   fmt::print("Enter Row: ");
-  if ((!(std::cin >> row)) ||
-      ((row < 1) ||
-       (row > 9))) { // use boolean expression for side effect AND checks ranges
+  if ((!(std::cin >> rowUsr)) ||
+      ((rowUsr < 1) ||
+       (rowUsr >
+        9))) { // use boolean expression for side effect AND checks ranges
     fmt::print("Invalid Input: Rows are indexed from 1 - 9\n");
     return;
   }
   fmt::print("Enter Column: ");
-  if ((!(std::cin >> col)) || ((col < 1) || (col > 9))) { // ...
+  if ((!(std::cin >> colUsr)) || ((colUsr < 1) || (colUsr > 9))) { // ...
     fmt::print("Invalid Input: Columns are indexed from 1 - 9\n");
     return;
   }
@@ -265,16 +305,29 @@ Game::handleUserCellEntry() // make bulletproof
     fmt::print("Invalid Input: Values can range from 1 - 9\n");
     return;
   }
+  // adjust index for row and col user input
+  uint16_t row = rowUsr - 1;
+  uint16_t col = colUsr - 1;
 
-  if (sudokuPtr->isPossible(value, row - 1, col - 1)) {
-    sudokuPtr->setCell(value, row - 1, col - 1);
-    moveMemory.emplace_back(Move(row - 1, col - 1, value));
+  // check if cell is empty
+  if (sudokuPtr->getCell(row, col)) {
+    fmt::print("Illegal operation - Cell at {}. row and {}. column is already "
+               "filled with value {}!\n",
+               rowUsr,
+               colUsr,
+               sudokuPtr->getCell(row, col));
+    return;
+  }
+
+  if (sudokuPtr->isPossible(value, row, col)) {
+    sudokuPtr->setCell(value, row, col);
+    moveMemory.emplace_back(Move(row, col, value));
   } else {
     fmt::print(
       "Illegal operation - Cant assign value {} to position {}/{} [row/col]\n",
       value,
-      row,
-      col);
+      rowUsr,
+      colUsr);
   }
 }
 

@@ -43,6 +43,8 @@ private:
   static void flushStdin();
   void reverseLastMove();
   // load / safe
+  static std::string getGamePath();
+  static void listSavedGames();
   void loadSavedGame(const std::string path);
   void saveCurrentGame() const;
 };

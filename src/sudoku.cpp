@@ -257,11 +257,11 @@ bool
 Sudoku::setFromFile(const std::string& filename)
 {
   std::ifstream file;
-  std::string path{ "boards/" + filename };
-  file.open(path);
+  // std::string path{ "boards/" + filename };
+  file.open(filename);
   if (!file.is_open()) {
-    throw std::runtime_error("Error while trying to read from File: " + path +
-                             "\n");
+    throw std::runtime_error(
+      "Error while trying to read from File: " + filename + "\n");
   }
   uint16_t buffer;
   for (uint16_t row{ 0 }; row < 9; ++row) {
@@ -269,12 +269,13 @@ Sudoku::setFromFile(const std::string& filename)
       file >> buffer;
       if (file.bad()) {
         throw std::runtime_error(
-          "Format Error occured while trying to read from File: " + path +
+          "Format Error occured while trying to read from File: " + filename +
           "\n");
       }
       setCell(buffer, row, col);
     }
     if (!isSolvable()) {
+      fmt::print("Warning - Loaded SuDoKu is unsolvable!\n");
       return false;
     }
   }
