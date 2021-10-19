@@ -5,6 +5,7 @@ test.cpp
 test
 *.ipynb
 .vscode/
+.cmake/**
 
 cmake_install.cmake
 CMakeCache.txt
