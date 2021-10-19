@@ -12,6 +12,7 @@ enum class Game::Difficulty
   hard = 3
 };
 
+
 Game::Difficulty
 Game::getDifficultyFromPlayer()
 {
