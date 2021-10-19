@@ -254,8 +254,6 @@ bool Sudoku::setFromFile(const std::string& filename)
             setCell(buffer, row, col);
         }
     }
-    printSudoku();
-    std::cin >> buffer;
     if (!isSolvable()) {
         return false;
     }

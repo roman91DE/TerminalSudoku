@@ -110,7 +110,7 @@ enum Game::MainMenuChoice Game::getMainMenuChoice()
     return static_cast<Game::MainMenuChoice>(inputVal);
 }
 
-// dummy function - needs to get path from stdin prompt
+// dummy function - needs to get path from console prompt
 const std::string Game::getBoardPath()
 {
     return std::string { "example.txt" };
@@ -163,8 +163,9 @@ void Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
     }
 }
 
+// read from stdin, loops until a valid input for playMenu is entered
 enum Game::PlayMenuChoice Game::getPlayMenuChoice()
-{ // read from stdin, loops until a valid input for playMenu is entered
+{ 
     uint16_t inputVal { 0 };
     std::cin >> inputVal;
     if ((inputVal <= static_cast<uint16_t>(Game::PlayMenuChoice::invalid)) || (inputVal > static_cast<uint16_t>(Game::PlayMenuChoice::toMainMenu))) {
@@ -175,7 +176,7 @@ enum Game::PlayMenuChoice Game::getPlayMenuChoice()
     return static_cast<Game::PlayMenuChoice>(inputVal);
 }
 
-Game::PlayMenuChoice Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
+Game::PlayMenuChoice Game::runPlayMenu() 
 {
     // display
     printGameState();
@@ -255,7 +256,7 @@ void Game::reverseLastMove()
 void Game::tryRecSolve()
 {
     if (sudokuPtr->solve()) {
-        fmt::print("Found this possible Solution to the current Board: \n");
+        fmt::print("Found a possible Solution to the current Board: \n");
         sudokuPtr->printSudoku();
     } else {
         fmt::print("Board is unsolvable in its current state!\n");

@@ -19,7 +19,7 @@ Version 1.0
 written by Roman Hoehn
 
 
-Source Code is available at:
+Source Code available at:
 https://github.com/roman91DE/TerminalSudoku
 
 
