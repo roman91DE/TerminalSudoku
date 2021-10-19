@@ -2,16 +2,25 @@ cmake_minimum_required(VERSION 3.0.0)
 project(TerminalSuDoKu VERSION 1.0)
 
 add_compile_options(
+  # c++ version:
+  # -----------
   -std=c++17
-  # set compiler warnings to maximum
+
+  # compiler warnings:
+  # ----------
   -Wall
   -Wextra
   -Wpedantic
   -Werror
+
+  # optimization/debugging level:
+  # ----------------------------
+  -g
+  # -O1
+  # -O2
+  # -O3
 )
 
-# include(CTest)
-# enable_testing()
 
 include_directories(
   src
@@ -26,9 +35,8 @@ add_executable(
   src/game.cpp
   )
 
-# locate fmt library
+# locate& link external library (fmt)
 find_package(fmt)
-# link project to fmt
 target_link_libraries(
   TerminalSuDoKu fmt::fmt
 )
