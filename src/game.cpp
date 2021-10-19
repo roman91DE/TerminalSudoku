@@ -84,7 +84,7 @@ Game::getNumCells(Game::Difficulty difficulty)
     case Game::Difficulty::hard:
       return 16;
     default:
-      return 8; 
+      return 8;
   }
 }
 
@@ -128,7 +128,8 @@ Game::getMainMenuChoice()
 }
 
 // dummy function - needs to get path from console prompt
-const std::string Game::getBoardPath()
+const std::string
+Game::getBoardPath()
 {
   return std::string{ "example.txt" };
 }
@@ -291,12 +292,12 @@ Game::reverseLastMove()
 void
 Game::tryRecSolve()
 {
-    if (sudokuPtr->solve()) {
-        fmt::print("Found a possible Solution to the current Board: \n");
-        sudokuPtr->printSudoku();
-    } else {
-        fmt::print("Board is unsolvable in its current state!\n");
-    }
+  if (sudokuPtr->solve()) {
+    fmt::print("Found a possible Solution to the current Board: \n");
+    sudokuPtr->printSudoku();
+  } else {
+    fmt::print("Board is unsolvable in its current state!\n");
+  }
 }
 
 void

@@ -125,8 +125,7 @@ Sudoku::randomInit(uint16_t numCells)
   solve();
   // safety check: sudoku must be solvable
   if (!isSolved()) {
-    std::cerr
-      << "...searching for a new board...\n";
+    std::cerr << "...searching for a new board...\n";
     resetSudoku();
     return randomInit(numCells); // check this: solve / init didnt work properly
   }
@@ -276,7 +275,8 @@ Sudoku::setFromFile(const std::string& filename)
       setCell(buffer, row, col);
     }
     if (!isSolvable()) {
-        return false;
+      return false;
     }
-    return true;
+  }
+  return true;
 }
