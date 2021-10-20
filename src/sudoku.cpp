@@ -236,7 +236,7 @@ Sudoku::writeToFile() const
   auto t = std::time(nullptr);
   auto tm = *std::localtime(&t);
   std::ostringstream oss;
-  oss << std::put_time(&tm, "%d%m%Y%H%M%S.txt");
+  oss << std::put_time(&tm, "usr-%d%m%Y-%H%M%S.txt");
   std::string path{ "boards/" + oss.str() };
 
   std::ofstream file;

@@ -21,4 +21,4 @@ TerminalSuDoKu
 *.out
 
 # saved games
-boards/*
+boards/usr*.txt

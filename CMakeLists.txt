@@ -4,7 +4,7 @@ project(TerminalSuDoKu VERSION 1.0)
 add_compile_options(
   # c++ version:
   # -----------
-  -std=c++20
+  -std=c++2a
 
   # compiler warnings:
   # ----------
