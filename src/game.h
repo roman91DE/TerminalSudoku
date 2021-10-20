@@ -42,6 +42,8 @@ private:
   void handleUserCellEntry();
   static void flushStdin();
   void reverseLastMove();
+  bool isSolved() const;
+  bool newOrMain() const;
   // load / safe
   static std::string getGamePath();
   static void listSavedGames();

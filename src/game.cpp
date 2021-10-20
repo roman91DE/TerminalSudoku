@@ -211,6 +211,12 @@ enum class Game::PlayMenuChoice
   toMainMenu,
 };
 
+bool
+Game::isSolved() const
+{
+  return sudokuPtr->isSolved();
+}
+
 void
 Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 {
@@ -220,8 +226,18 @@ Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
     game.loadSavedGame(boardPath);
   }
   Game::PlayMenuChoice usersLastChoice{ Game::PlayMenuChoice::invalid };
+
   while (usersLastChoice != Game::PlayMenuChoice::toMainMenu) {
+
     usersLastChoice = game.runPlayMenu();
+
+    if (game.isSolved()) {
+      if (game.newOrMain()) {
+        return game.setUpNewGame(difficulty);
+      } else {
+        usersLastChoice = Game::PlayMenuChoice::toMainMenu;
+      }
+    }
   }
   game.runMainMenu();
 }
@@ -282,6 +298,25 @@ Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
       ;
   }
 }
+
+// // returns true if user chooses another game and false if he wants back to
+// main menu bool Game::newOrMain() const {
+//   fmt::print("The current Board has been solved, what do you want to do
+//   next?\n1 - Start new game\n2 - Return to main menu\n:"); uint16_t
+//   usrChoice{}; std::cin >> usrChoice; if (  (std::cin.bad() ||
+//   ((usrChoice<1)||(usrChoice>2)))  ) {
+//     fmt::print("Invalid Input - Please try again!\n");
+//     Game::flushStdin();
+//     return newOrMain();
+//   }
+//   if (usrChoice == 1) return true;
+//   else if (usrChoice == 2) return false;
+//   else {
+//     throw std::runtime_error("Something went wrong after a board was
+//     solved!");
+//   }
+
+// }
 
 void
 Game::handleUserCellEntry() // make bulletproof
