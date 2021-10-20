@@ -155,7 +155,7 @@ Game::getGamePath()
       return entry.path().string();
     }
   }
-  if (!idx) {
+  if (idx <= 1) { // ok???
     throw std::runtime_error("No saved games - Starting new game!\n");
   }
   fmt::print("Invalid Choice - Pick a number between {} and {} to select an "
@@ -233,7 +233,7 @@ Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 
     if (game.isSolved()) {
       if (game.newOrMain()) {
-        return game.setUpNewGame(difficulty);
+        game.setUpNewGame(Game::getDifficultyFromPlayer());
       } else {
         usersLastChoice = Game::PlayMenuChoice::toMainMenu;
       }
@@ -300,23 +300,27 @@ Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
 }
 
 // // returns true if user chooses another game and false if he wants back to
-// main menu bool Game::newOrMain() const {
-//   fmt::print("The current Board has been solved, what do you want to do
-//   next?\n1 - Start new game\n2 - Return to main menu\n:"); uint16_t
-//   usrChoice{}; std::cin >> usrChoice; if (  (std::cin.bad() ||
-//   ((usrChoice<1)||(usrChoice>2)))  ) {
-//     fmt::print("Invalid Input - Please try again!\n");
-//     Game::flushStdin();
-//     return newOrMain();
-//   }
-//   if (usrChoice == 1) return true;
-//   else if (usrChoice == 2) return false;
-//   else {
-//     throw std::runtime_error("Something went wrong after a board was
-//     solved!");
-//   }
-
-// }
+// main menu
+bool
+Game::newOrMain() const
+{
+  fmt::print("The current Board has been solved, what do you want to do "
+             "next?\n1 - Start new game\n2 - Return to main menu\n:");
+  uint16_t usrChoice{};
+  std::cin >> usrChoice;
+  if ((std::cin.bad() || ((usrChoice < 1) || (usrChoice > 2)))) {
+    fmt::print("Invalid Input - Please try again!\n");
+    Game::flushStdin();
+    return newOrMain();
+  }
+  if (usrChoice == 1)
+    return true;
+  else if (usrChoice == 2)
+    return false;
+  else {
+    throw std::runtime_error("Something went wrong after a board was solved!");
+  }
+}
 
 void
 Game::handleUserCellEntry() // make bulletproof
