@@ -81,6 +81,7 @@ Sudoku::resetSudoku()
 // randomized methods
 // ----------
 
+// TODO not used so far
 void
 Sudoku::seedRandomEngine()
 {
@@ -168,15 +169,15 @@ Sudoku::recursiveSolve()
   throw Sudoku::stopRecursion();
 }
 
+
+// TODO test function
 bool
 Sudoku::isSolved() const
 {
   uint32_t sum{ 0 };
   for (const auto& row : board) {
-    for (const auto& col : row) {
-      sum += col;
+    sum += std::accumulate(row.begin(), row.end(),0);
     }
-  }
   return (sum == Sudoku::checkSum);
 }
 

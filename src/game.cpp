@@ -43,8 +43,8 @@ struct Game::Move
 Game::Game(Game::Difficulty difficulty)
 
   : sudokuPtr(std::make_unique<Sudoku>(Sudoku()))
-  , undoMemory(std::vector<Game::Move>{}),
-    redoMemory(std::vector<Game::Move>{})
+  , undoMemory(std::vector<Game::Move>{})
+  , redoMemory(std::vector<Game::Move>{})
 
 {
   sudokuPtr->randomInit(getNumCells(difficulty));
@@ -264,7 +264,8 @@ Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
 {
   // display
   printGameState();
-  fmt::print("1 - Enter Value\n2 - Undo last\n3 - Redo last\n4 - Show Solution (finishes "
+  fmt::print("1 - Enter Value\n2 - Undo last\n3 - Redo last\n4 - Show Solution "
+             "(finishes "
              "current game)\n4 - Start new Game\n5 - Save current Game\n6 - "
              "Back to main Menu\n");
   fmt::print("Select action\n:");
@@ -377,6 +378,9 @@ Game::handleUserCellEntry() // make bulletproof
   }
 }
 
+// FIXME bug - its possible to produce invalid board states by mixing undo/redo
+
+
 void
 Game::undoLastMove()
 {
@@ -386,11 +390,10 @@ Game::undoLastMove()
     sudokuPtr->clearCell(undoMemory[undoMemory.size() - 1].row,
                          undoMemory[undoMemory.size() - 1].col);
 
-    redoMemory.push_back(undoMemory[undoMemory.size()-1]);
+    redoMemory.push_back(undoMemory[undoMemory.size() - 1]);
     undoMemory.pop_back();
   }
 }
-
 
 void
 Game::redoLastMove()
@@ -398,19 +401,26 @@ Game::redoLastMove()
   if (redoMemory.empty()) {
     fmt::print("No more moves to redo!\n");
   } else {
-    sudokuPtr->setCell( redoMemory[redoMemory.size() - 1].val,
-                        redoMemory[redoMemory.size() - 1].row,
-                         redoMemory[redoMemory.size() - 1].col);
+    sudokuPtr->setCell(redoMemory[redoMemory.size() - 1].val,
+                       redoMemory[redoMemory.size() - 1].row,
+                       redoMemory[redoMemory.size() - 1].col);
 
-    undoMemory.push_back(redoMemory[redoMemory.size()-1]);
+    undoMemory.push_back(redoMemory[redoMemory.size() - 1]);
     redoMemory.pop_back();
   }
 }
 
-
 void
 Game::tryRecSolve()
 {
+  fmt::print("Do you want to save the current state of the game before solving "
+             "it? [y/N]");
+  char buf;
+  std::cin >> buf;
+  flushStdin();
+  if ((buf == 'y') || (buf == 'Y')) {
+    Game::saveCurrentGame();
+  }
   if (sudokuPtr->solve()) {
     fmt::print("Found a possible Solution to the current Board: \n");
     sudokuPtr->printSudoku();
