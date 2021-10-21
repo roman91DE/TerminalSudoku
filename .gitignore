@@ -32,3 +32,13 @@ game-cppcheck-build-dir/main.s1
 game-cppcheck-build-dir/statistics.txt
 game-cppcheck-build-dir/sudoku.a1
 game-cppcheck-build-dir/sudoku.s1
+boards/19102021221233.txt
+boards/19102021221401.txt
+cppCheckProjectFolder/files.txt
+cppCheckProjectFolder/game.a1
+cppCheckProjectFolder/game.s1
+cppCheckProjectFolder/log.txt
+cppCheckProjectFolder/main.a1
+cppCheckProjectFolder/main.s1
+cppCheckProjectFolder/sudoku.a1
+cppCheckProjectFolder/sudoku.s1

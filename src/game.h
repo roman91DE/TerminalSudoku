@@ -23,7 +23,7 @@ public:
 private:
   // member variables
   std::unique_ptr<Sudoku> sudokuPtr;
-  std::vector<Game::Move> moveMemory;
+  std::vector<Game::Move> undoMemory, redoMemory;
   // methods
   Game(Game::Difficulty difficulty);
   ~Game();
@@ -41,7 +41,8 @@ private:
   static enum Game::PlayMenuChoice getPlayMenuChoice();
   void handleUserCellEntry();
   static void flushStdin();
-  void reverseLastMove();
+  void undoLastMove();
+  void redoLastMove();
   bool isSolved() const;
   bool newOrMain() const;
   // load / safe

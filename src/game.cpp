@@ -43,7 +43,8 @@ struct Game::Move
 Game::Game(Game::Difficulty difficulty)
 
   : sudokuPtr(std::make_unique<Sudoku>(Sudoku()))
-  , moveMemory(std::vector<Game::Move>{})
+  , undoMemory(std::vector<Game::Move>{}),
+    redoMemory(std::vector<Game::Move>{})
 
 {
   sudokuPtr->randomInit(getNumCells(difficulty));
@@ -54,7 +55,7 @@ Game::~Game() {}
 void
 Game::printGameState() const
 {
-  fmt::print("Number of moves: {}\n\n", moveMemory.size());
+  fmt::print("Number of moves: {}\n\n", undoMemory.size());
   sudokuPtr->printSudoku();
 }
 
@@ -68,7 +69,8 @@ Game::flushStdin()
 void
 Game::setUpNewGame(Game::Difficulty difficulty)
 {
-  moveMemory.clear();
+  undoMemory.clear();
+  redoMemory.clear();
   sudokuPtr->resetSudoku();
   sudokuPtr->randomInit(getNumCells(difficulty));
 }
@@ -202,7 +204,8 @@ enum class Game::PlayMenuChoice
 {
   invalid = 0,
   enterValue,
-  reverseLast,
+  undoLast,
+  redoLast,
   autoSolve,
   startNewGame,
   saveGame,
@@ -261,7 +264,7 @@ Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
 {
   // display
   printGameState();
-  fmt::print("1 - Enter Value\n2 - Reverse last\n3 - Show Solution (finishes "
+  fmt::print("1 - Enter Value\n2 - Undo last\n3 - Redo last\n4 - Show Solution (finishes "
              "current game)\n4 - Start new Game\n5 - Save current Game\n6 - "
              "Back to main Menu\n");
   fmt::print("Select action\n:");
@@ -274,8 +277,12 @@ Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
       Game::handleUserCellEntry();
       return usrChoice;
 
-    case Game::PlayMenuChoice::reverseLast:
-      Game::reverseLastMove();
+    case Game::PlayMenuChoice::undoLast:
+      Game::undoLastMove();
+      return usrChoice;
+
+    case Game::PlayMenuChoice::redoLast:
+      Game::redoLastMove();
       return usrChoice;
 
     case Game::PlayMenuChoice::autoSolve:
@@ -360,7 +367,7 @@ Game::handleUserCellEntry() // make bulletproof
 
   if (sudokuPtr->isPossible(value, row, col)) {
     sudokuPtr->setCell(value, row, col);
-    moveMemory.emplace_back(Move(row, col, value));
+    undoMemory.emplace_back(Move(row, col, value));
   } else {
     fmt::print(
       "Illegal operation - Cant assign value {} to position {}/{} [row/col]\n",
@@ -371,16 +378,35 @@ Game::handleUserCellEntry() // make bulletproof
 }
 
 void
-Game::reverseLastMove()
+Game::undoLastMove()
 {
-  if (moveMemory.empty()) {
-    fmt::print("No more moves to reverse!\n");
+  if (undoMemory.empty()) {
+    fmt::print("No more moves to undo!\n");
   } else {
-    sudokuPtr->clearCell(moveMemory[moveMemory.size() - 1].row,
-                         moveMemory[moveMemory.size() - 1].col);
-    moveMemory.pop_back();
+    sudokuPtr->clearCell(undoMemory[undoMemory.size() - 1].row,
+                         undoMemory[undoMemory.size() - 1].col);
+
+    redoMemory.push_back(undoMemory[undoMemory.size()-1]);
+    undoMemory.pop_back();
   }
 }
+
+
+void
+Game::redoLastMove()
+{
+  if (redoMemory.empty()) {
+    fmt::print("No more moves to redo!\n");
+  } else {
+    sudokuPtr->setCell( redoMemory[redoMemory.size() - 1].val,
+                        redoMemory[redoMemory.size() - 1].row,
+                         redoMemory[redoMemory.size() - 1].col);
+
+    undoMemory.push_back(redoMemory[redoMemory.size()-1]);
+    redoMemory.pop_back();
+  }
+}
+
 
 void
 Game::tryRecSolve()
