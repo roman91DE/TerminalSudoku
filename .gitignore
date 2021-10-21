@@ -22,3 +22,13 @@ TerminalSuDoKu
 
 # saved games
 boards/usr*.txt
+game.cppcheck
+game-cppcheck-build-dir/files.txt
+game-cppcheck-build-dir/game.a1
+game-cppcheck-build-dir/game.s1
+game-cppcheck-build-dir/lastResults.xml
+game-cppcheck-build-dir/main.a1
+game-cppcheck-build-dir/main.s1
+game-cppcheck-build-dir/statistics.txt
+game-cppcheck-build-dir/sudoku.a1
+game-cppcheck-build-dir/sudoku.s1
