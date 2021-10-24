@@ -71,7 +71,9 @@ Game::setUpNewGame(Game::Difficulty difficulty)
 {
   undoMemory.clear();
   redoMemory.clear();
+
   sudokuPtr->resetSudoku();
+  sudokuPtr->seedRandomEngine();
   sudokuPtr->randomInit(getNumCells(difficulty));
 }
 
@@ -225,7 +227,6 @@ Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
 {
   Game game = Game(difficulty);
   if (boardPath.size() > 0) { // if boardPath string not empty, try to read it
-    // Game game{ Game::Difficulty::easy };   ->  Bug???
     game.loadSavedGame(boardPath);
   }
   Game::PlayMenuChoice usersLastChoice{ Game::PlayMenuChoice::invalid };
@@ -245,9 +246,10 @@ Game::startGameLoop(Game::Difficulty difficulty, std::string boardPath)
   game.runMainMenu();
 }
 
+// read from stdin, loops until a valid input for playMenu is entered
 enum Game::PlayMenuChoice
 Game::getPlayMenuChoice()
-{ // read from stdin, loops until a valid input for playMenu is entered
+{
   uint16_t inputVal{ 0 };
   std::cin >> inputVal;
   if ((inputVal <= static_cast<uint16_t>(Game::PlayMenuChoice::invalid)) ||
@@ -260,7 +262,7 @@ Game::getPlayMenuChoice()
 }
 
 Game::PlayMenuChoice
-Game::runPlayMenu() // split into displayPlayMenu() and getFromPlayMenu() ?
+Game::runPlayMenu()
 {
   // display
   printGameState();
@@ -380,7 +382,6 @@ Game::handleUserCellEntry() // make bulletproof
 
 // FIXME bug - its possible to produce invalid board states by mixing undo/redo
 
-
 void
 Game::undoLastMove()
 {
@@ -390,23 +391,31 @@ Game::undoLastMove()
     sudokuPtr->clearCell(undoMemory[undoMemory.size() - 1].row,
                          undoMemory[undoMemory.size() - 1].col);
 
-    redoMemory.push_back(undoMemory[undoMemory.size() - 1]);
+    redoMemory.emplace_back(undoMemory[undoMemory.size() - 1]);
     undoMemory.pop_back();
   }
 }
 
+// TODO: Check if this is a better solution and if conflicts are possible!
 void
 Game::redoLastMove()
 {
   if (redoMemory.empty()) {
     fmt::print("No more moves to redo!\n");
   } else {
-    sudokuPtr->setCell(redoMemory[redoMemory.size() - 1].val,
-                       redoMemory[redoMemory.size() - 1].row,
-                       redoMemory[redoMemory.size() - 1].col);
+    if (sudokuPtr->isPossible(redoMemory[redoMemory.size() - 1].val,
+                              redoMemory[redoMemory.size() - 1].row,
+                              redoMemory[redoMemory.size() - 1].col)) {
+      sudokuPtr->setCell(redoMemory[redoMemory.size() - 1].val,
+                         redoMemory[redoMemory.size() - 1].row,
+                         redoMemory[redoMemory.size() - 1].col);
 
-    undoMemory.push_back(redoMemory[redoMemory.size() - 1]);
-    redoMemory.pop_back();
+      undoMemory.emplace_back(redoMemory[redoMemory.size() - 1]);
+      redoMemory.pop_back();
+    } else {
+      redoMemory.pop_back();
+      Game::redoLastMove();
+    }
   }
 }
 
