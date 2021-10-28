@@ -1,5 +1,4 @@
 #!/bin/sh
 
 # build from source
-cmake CMakeLists.txt
-make
+cmake CMakeLists.txt & make

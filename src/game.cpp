@@ -266,6 +266,8 @@ Game::runPlayMenu()
 {
   // display
   printGameState();
+  // TODO Numbering system broken?
+  // git?
   fmt::print("1 - Enter Value\n2 - Undo last\n3 - Redo last\n4 - Show Solution "
              "(finishes "
              "current game)\n4 - Start new Game\n5 - Save current Game\n6 - "
